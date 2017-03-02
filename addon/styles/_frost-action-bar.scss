@@ -3,8 +3,7 @@ $frost-action-bar-background-color: rgba($frost-color-white, 0.85);
 
 .frost-action-bar {
   display: flex;
-  position: absolute;
-  bottom: 0;
+  position: relative;
   left: 1px;
   flex-direction: row;
   justify-content: space-between;
