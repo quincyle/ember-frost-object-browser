@@ -1,3 +1,7 @@
+# 17.0.7
+- Removed classNameBindings, and propTypes for unused selectedItems
+- Change action-bar from absolute positioning to flex layout
+
 # 17.0.6
 * **Fixed** build by disable dependency snapshot which is causing build to fail and not publish.
 
