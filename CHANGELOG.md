@@ -1,3 +1,6 @@
+# 17.0.8
+* **Updated** the travis scripts used for bumping and publishing
+
 # 17.0.7
 - Removed classNameBindings, and propTypes for unused selectedItems
 - Change action-bar from absolute positioning to flex layout
