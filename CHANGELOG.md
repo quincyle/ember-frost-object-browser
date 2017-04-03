@@ -1,3 +1,11 @@
+# 17.0.9 (2017-04-03)
+* **Added** integration tests
+* **Added** test coverage configuration file
+* **Removed** exports for disableHelper and logicOr that no longer exist in codebase.
+* **Updated** tests to run in Firefox and Chrome and renamed file to `testem.js`
+* **Updated** version of ember-computed-decorators to `0.3.0`
+* **Updated** export of stringPluralize was incorrectly named
+
 # 17.0.8
 * **Updated** the travis scripts used for bumping and publishing
 
