@@ -3,53 +3,52 @@
  */
 
 import {expect} from 'chai'
-import {$hook} from 'ember-hook'
-import wait from 'ember-test-helpers/wait'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
-import sinon from 'sinon'
+import {registerMockComponent, unregisterMockComponent} from '../../helpers/mock-component'
 
 import {integration} from 'dummy/tests/helpers/ember-test-utils/setup-component-test'
 
 const test = integration('frost-action-bar')
-describe.skip(test.label, function () {
+describe(test.label, function () {
   test.setup()
 
-  let sandbox
+  let testObject = Ember.Object.create()
+  let selectedTestItems = [
+    testObject
+  ]
 
   beforeEach(function () {
-    sandbox = sinon.sandbox.create()
+    registerMockComponent(this, 'mock-controls')
+    this.set('selectedItems', [])
+
+    this.render(hbs`
+      {{frost-action-bar
+        controls=(array (component 'mock-controls' class='mock-controls'))
+        selectedItems=selectedItems
+      }}
+    `)
   })
 
   afterEach(function () {
-    sandbox.restore()
+    unregisterMockComponent(this)
   })
 
-  it('should have real tests', function () {
-    expect(true).to.equal(false)
+  it('should render a component passed into the "controls" property', function () {
+    expect(this.$('.mock-controls')).to.have.length(1)
   })
 
-  describe('after render', function () {
+  it('should be hidden in the DOM until selectedItems[] has elements', function () {
+    expect(this.$('.frost-action-bar')).to.have.css('display', 'none')
+  })
+
+  describe('when selectedItems is not empty', function () {
     beforeEach(function () {
-      this.setProperties({
-        myHook: 'myThing'
-      })
-
-      this.render(hbs`
-        {{frost-action-bar
-          hook=myHook
-        }}
-      `)
-
-      return wait()
+      this.set('selectedItems', selectedTestItems)
     })
 
-    it('should have an element', function () {
-      expect(this.$()).to.have.length(1)
-    })
-
-    it('should be accessible via the hook', function () {
-      expect($hook('myThing')).to.have.length(1)
+    it('should list the number of selected items', function () {
+      expect(this.$('.frost-action-bar-selections').text().trim()).to.equal('1 Item selected')
     })
   })
 })
