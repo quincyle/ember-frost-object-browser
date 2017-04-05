@@ -9,7 +9,11 @@ module.exports = {
     this._super.included(app)
   },
 
+  /* eslint-disable complexity */
   init: function (app) {
+    if (this._super.init) {
+      this._super.init.apply(this, arguments)
+    }
     this.options = this.options || {}
     this.options.babel = this.options.babel || {}
     this.options.babel.optional = this.options.babel.optional || []
@@ -20,4 +24,6 @@ module.exports = {
     // eslint-disable-next-line no-unused-expressions
     this._super.init && this._super.init.apply(this, arguments)
   }
+  /* eslint-enable complexity */
+
 }
