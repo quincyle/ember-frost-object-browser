@@ -1,3 +1,6 @@
+# 17.0.10 (2017-04-05)
+demo page updates + package updates
+
 # 17.0.9 (2017-04-03)
 * **Added** integration tests
 * **Added** test coverage configuration file
