@@ -1,0 +1,41 @@
+<div class='frost-modal-demo-notes'>
+  <div class='frost-modal-demo-title'>
+    Helpers
+  </div>
+  <div>
+    <p>The following helpers are available to easily set the state of action bar buttons or links.</p>
+    <ul>
+      <li>
+        <b>single-select</b> - Using this helper, the action bar component will be enabled
+        if one and only one item is selected in the content list
+        {{code-snippet name='single-select.hbs'}}
+      </li>
+      <li>
+        <b>multi-select</b> - Using this helper, the action bar component will be enabled
+        if one or more items are selected in the content list. For example, it could be used to control the state of
+        a 'Delete' button that allows for more than one item to be deleted at once.
+        {{code-snippet name='multi-select.hbs'}}
+      </li>
+    </ul>
+  </div>
+</div>
+
+{{!-- BEGIN-SNIPPET single-select}}
+(component 'frost-button'
+  disabled=(single-select selectedItems)
+  priority='secondary'
+  size='medium'
+  text='Edit'
+  onClick=(action 'onEditAction' selectedItems)
+)
+{{END-SNIPPET --}}
+
+{{!-- BEGIN-SNIPPET multi-select}}
+(component 'frost-button'
+  disabled=(multi-select selectedItems)
+  priority='secondary'
+  size='medium'
+  text='Delete'
+  onClick=(action 'onDeleteAction' selectedItems)
+)
+{{END-SNIPPET --}}

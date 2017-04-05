@@ -22,7 +22,7 @@ export default Component.extend({
 
   propTypes: {
     // options
-    controls: PropTypes.arrayOf(PropTypes.any).isRequired,
+    controls: PropTypes.arrayOf(PropTypes.EmberComponent).isRequired,
     selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.EmberObject,
       PropTypes.object

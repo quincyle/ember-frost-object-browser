@@ -9,6 +9,7 @@ var Router = EmberRouter.extend({
 
 Router.map(function () {
   this.route('overview', {path: '/'})
+  this.route('helpers')
   this.route('client')
   this.route('client-code')
   this.route('server')

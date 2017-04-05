@@ -10,4 +10,3 @@ describe.skip('Unit | Helper | single select', function () {
     expect(result).to.be.ok
   })
 })
-

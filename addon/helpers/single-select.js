@@ -1,8 +1,9 @@
 import Ember from 'ember'
 const {Helper, isArray} = Ember
 
-// TODO Better repo location?
-
+/*
+ *  Returns false if one and only one item is in selectedItems
+*/
 export default Helper.extend({
   destroy () {
     if (this.teardown) this.teardown()

@@ -1,7 +1,10 @@
 import Ember from 'ember'
 const {Helper, isArray} = Ember
 
-// TODO Better repo location?
+/*
+ *  Returns false if one or more items are selectedItems
+*/
+
 export function multiSelect ([selectedItems]) {
   return isArray(selectedItems) && selectedItems.length === 0
 }
