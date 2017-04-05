@@ -9,10 +9,10 @@ export default Component.extend({
   // == Properties ============================================================
   propTypes: {
     // Options
-    content: PropTypes.EmberObject.isRequired,
-    controls: PropTypes.EmberObject.isRequired,
+    content: PropTypes.EmberComponent.isRequired,
+    controls: PropTypes.EmberComponent.isRequired,
     hook: PropTypes.string.isRequired,
-    filters: PropTypes.EmberObject.isRequired
+    filters: PropTypes.EmberComponent.isRequired
     // State
   },
 
