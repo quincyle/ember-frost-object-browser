@@ -3,7 +3,7 @@
  */
 
 import Ember from 'ember'
-const {A, Controller, isEmpty} = Ember
+const {A, Controller, inject, isEmpty} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
 import _ from 'lodash'
@@ -11,6 +11,7 @@ import _ from 'lodash'
 export default Controller.extend({
 
   // == Dependencies ==========================================================
+  notifications: inject.service('notification-messages'),
 
   // == Keyword Properties
 
@@ -87,6 +88,7 @@ export default Controller.extend({
   // == Actions ===============================================================
 
   actions: {
+    // BEGIN-SNIPPET server-controller
     onExpansionChange (expandedItems) {
       this.get('expandedItems').setObjects(expandedItems)
     },
@@ -97,10 +99,14 @@ export default Controller.extend({
       this.get('expandedItems').clear()
       this.set('filters', _.cloneDeep(filters))
       this.fetch()
+      this.get('notifications').success('Server should return filtered results', {
+        autoClear: true,
+        clearDuration: 2000
+      })
     },
 
     onGenericAction (selectedItems, message) {
-      this.get('notifications').success('Generic action', {
+      this.get('notifications').success(message, {
         autoClear: true,
         clearDuration: 2000
       })
@@ -116,6 +122,11 @@ export default Controller.extend({
       this.get('expandedItems').clear()
       this.get('sortOrder').setObjects(sortOrder)
       this.fetch()
+      this.get('notifications').success('Server should return sorted results', {
+        autoClear: true,
+        clearDuration: 2000
+      })
     }
+    // END-SNIPPET
   }
 })

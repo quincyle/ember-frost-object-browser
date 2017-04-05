@@ -2,364 +2,79 @@
 @import 'tests/dummy/app/pods/components/list-item/styles';
 @import 'tests/dummy/app/pods/components/list-item-expansion/styles';
 
-// TODO Cleanup
-
-.frost-doc-inline-link {
-  text-decoration: none;
-  line-height: 1.6;
-  color: $frost-color-blue-1;
-}
-
-code {
-  padding: 0.2em 0;
-  margin: 0;
-  font-size: 75%;
-  background-color: rgba(0,0,0,0.04);
-  border-radius: 3px;
-
-  &::before,
-  &::after {
-    letter-spacing: -0.2em;
-    content: "\00a0";
-  }
-}
-
-a.frost-list-doc-link {
-  text-decoration: none;
-  color: $frost-color-blue-1;
-}
-
-html {
-  line-height: 1.6;
-}
-
-.docs {
-  height: 100%;
-  display: flex;
-  max-width: 1024px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 16px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-
-.frost-demo-nav-wrapper {
-  background-color: $frost-color-blue-1;
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
-  .frost-demo-nav {
-    display: flex;
-    flex-direction: row;
-    list-style-type: none;
-
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-
-
-    .demo-nav-item {
-      padding: 0;
-      .demo-link {
-        display: block;
-        color: $frost-color-white;
-        font-size: 17px;
-        letter-spacing: 2px;
-        text-decoration: none;
-        padding: 15px 20px 15px 20px;
-        transition: background-color .3s,color .15s,box-shadow .3s,opacity 0.3s;
-        cursor: pointer;
-
-        &:hover {
-          background-color: white;
-          color: black;
-        }
-        &.active {
-          background-color: white;
-          color: black;
-        }
-      }
-    }
-  }
-}
-
-
-$medium-breakpoint: 748px;
-$side-nav-color: #777;
-$brand-color: #E61A1A;
-
-.side-nav {
-  width: 200px;
-  color: $side-nav-color;
-  flex: 0 0 25%;
-  margin-right: 2rem;
-  @media only screen and (max-width: $medium-breakpoint) {
-    display: none;
-  }
-}
-.side-nav-header {
-  line-height: 1.6;
-  font-size: 18px;
-  font-weight: 300;
-  color: #777;
-  margin-bottom: 10px;
-  border-bottom: 1px solid rgba(153, 153, 153, 0.2);
-  &:not(:first-child) {
-    margin-top: 1.5rem;
-  }
-}
-.side-nav-link {
-  text-decoration: none;
-  line-height: 1.6;
-  display: block;
-  color: #999;
-  padding-left: 16px;
-  .beta-label {
-    color: white;
-    background-color: #999;
-    padding: 1px 5px;
-    border-radius: 3px;
-    font-size: 80%;
-  }
-  &.active {
-    border-left: 3px solid $frost-color-blue-1;
-    color: $frost-color-blue-1;
-    padding-left: 16px - 3px;
-    .beta-label {
-      background-color: $frost-color-blue-1;
-    }
-  }
-}
-
-
-.list-doc.doc-title {
-  margin-top: 0;
-  font-size: 2rem;
-  margin-bottom: .5rem;
-  font-weight: bold;
-  line-height: 1.25;
-  color: #313131;
-  text-rendering: optimizeLegibility;
-}
-
-
-
-.dummy-notification-container {
-  position: fixed;
-  top: 60px;
-  right: 10px;
-  z-index: 999;
-  width: 80%;
-  max-width: 400px;
-  margin: auto;
-}
-
-.flex-row {
+.frost-modal-demo {
   display: flex;
   flex-direction: row;
+}
 
-  > div {
-    flex: 1;
+.frost-modal-demos {
+  height: 100vh;
+  padding: 0 20px;
+}
+
+.frost-modal-demo-title {
+  margin-top: 20px;
+  color: $frost-color-grey-2;
+  font-size: $frost-font-m;
+  font-weight: bold;
+}
+
+.frost-modal-demo-notes {
+  margin: 0 20px 0 10px;
+  font-size: $frost-font-s;
+}
+
+.frost-modal-demo-snippet {
+  pre {
+    font-size: 0.8em;
   }
 }
 
-.frost-list-item {
-  display: flex;
-  align-items: center;
+.frost-modal-demo-selectors {
+  min-width: 100px;
+  height: calc(100vh - 61px);
+  margin: 10px 0 10px 10px;
+  padding-right: 20px;
+  font-size: $frost-font-s;
 
-  .frost-bunsen-detail {
-    flex: 1;
-  }
-}
+  a {
+    display: block;
+    transition: color .3s;
+    color: $frost-color-grey-2;
+    font-style: normal;
+    text-decoration: initial;
+    cursor: pointer;
 
-.dummy-body {
-  height: 100%;
+    &:hover {
+      color: $frost-color-blue-3;
+    }
 
-  .dummy-content {
-      height: 100%;
+    &.active {
+      color: $frost-color-blue-1;
+    }
 
-    > .ember-view {
+    + a {
+      padding-top: 10px;
     }
   }
 }
 
-.dummy-content-view {
-  // flex: 1;
-  display: flex;
-  flex-direction: column;
+.frost-modal-demo-selector-title {
+  padding-top: 10px;
+  font-style: italic;
 
-  & .tools {
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  + a {
+    padding-top: 10px;
   }
 
-  & .pagination {
-    margin-left: auto;
-  }
-
-  .detail, .pagination {
-    display: table;
-    .button-bar, .text {
-      display: table-cell;
-      vertical-align: middle;
-
-      &.left {
-        padding-right: 5px;
-      }
-
-      &.right {
-        .frost-icon {
-          transform: scaleX(-1);
-        }
-      }
-    }
-
-    .text {
-      padding-right: 5px;
-    }
-
-    .button-bar {
-      > .frost-button.small:last-child {
-        padding-right: 0px;
-      }
-      .frost-button {
-        svg * {
-          fill: $frost-color-grey-2;
-          stroke: none;
-        }
-
-        &.small {
-          padding: 0 5px;
-        }
-
-        &:hover {
-          background: none;
-        }
-        &:disabled {
-          opacity: 1;
-          svg * {
-            fill: $frost-color-blue-1;
-          }
-        }
-      }
-    }
-
-
-  }
-
-  & .frost-list {
-    flex: 1;
-  }
-
-  .frost-list-item {
-    .select-checkbox {
-      .frost-checkbox {
-        margin: 0 0 0 10px;
-      }
-    }
-  }
-
-  .frost-list .records {
-    padding-left: 1px;
-    border-left: none;
-    border-right: none;
-  }
-
-  .frost-list .records > div {
-    border: solid 2px transparent;
-    border-top: solid 1px $frost-color-lgrey-1;
-    padding: 6px 2px 6px 2px;
-    width: calc(100% - 1px);
-  }
-
-  .frost-list .records > div:hover {
-    border: solid 2px $frost-color-blue-1;
-    padding-top: 5px;
+  > a,
+  > .frost-modal-demo-selector-title {
+    padding: 10px 0 0 10px;
   }
 }
 
-
-
-
-// hack
-
-
-body {
-  height: 100%;
+.frost-modal-demo-example {
+  width: 100%;
 }
 
-//h1 {
-//  margin-top: 0;
-//  font-size: 2rem;
-//  margin-bottom: .5rem;
-//  font-weight: bold;
-//  line-height: 1.25;
-//  color: #313131;
-//  text-rendering: optimizeLegibility;
-//}
-
-//header {
-//  background: #2f3f40;
-//  border-bottom: 1px solid #111;
-//  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.75);
-//}
-
-//nav {
-//  font-size: 2rem;
-//  line-height: 2.5em;
-//  color: #333;
-//  text-align: center;
-//}
-
-nav a {
-  color: #777;
-}
-
-.Query {
-  position: relative;
-}
-
-.Query:hover .popover {
-  top: 10px;
-  left: -100px;
-  width: 200px;
-  display: block;
-}
-
-.table-wrapper {
-  display: block;
-  height: 500px;
-  max-height: 500px;
-  overflow: scroll;
-  -webkit-overflow-scrolling: touch;
-  overflow-scrolling: touch;
-  position: relative;
-  background: #fff;
-}
-
-.table-wrapper.dark, .bg-dark {
-  background: #2f3f40;
-}
-
-.demo-wrapper {
-  margin-top: 25px;
-  padding: 15px;
-}
-
-.table-wrapper table {
-  height: 500px;
-}
-
-.table-wrapper table tr {
-  height: 37px;
-}
-
-.image-slide {
-  width: 250px;
-  height: 270px;
-  margin: 0 auto;
-  padding: 10px 0;
-  position: relative;
-}
+@import 'ember-frost-bunsen';

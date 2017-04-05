@@ -22,165 +22,81 @@
 ember install ember-frost-object-browser
 ```
 
-## API
-
-Frost object browser is a pattern that provides slots for the
-content areas within the pattern and a selection interface to drive
-the behavior of actions based on selection.
-
-The implementor provides the content for each slot using recommended
-Frost components.  This allows the full interface/features of each
-sub-component to be used and makes swapping sub-components simple.
-
-The recommended sub-components are:
-
-* [frost-info-bar](https://github.com/ciena-frost/ember-frost-info-bar)  
-* [frost-bunsen](https://github.com/ciena-frost/ember-frost-bunsen)  
-* [frost-list](https://github.com/ciena-frost/ember-frost-list)  
-* [frost-button](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-button.md)  
-* [frost-link](https://github.com/ciena-frost/ember-frost-core/blob/master/frost-link.md)  
-
-Refer to the documentation available in each of these projects for
-the appropriate usage.
-
-The 'view' slot provides a selection interface that should be 
-implemented in the sub-component chosen to display the object
-browser content.  This interface consists of an `onSelect` action
-that expects an event with the current selections whenever the 
-selection changes.
-
-The 'actions' slot provides controls (button, link) that are coupled
-to the selection state.  The controls are disabled when there are no
-selections and are enabled when one (default behavior) or more (if
-multiSelect=true is added to the control) objects are selected.
-
-```handlebars
-{{#frost-object-browser
-  selections=selectedItems
-}}
-  {{#block-slot 'info-bar'}}
-    {{#frost-info-bar}}
-      ...
-    {{/frost-info-bar}}
-  {{/block-slot}}
-  {{#block-slot 'facets'}}
-    {{frost-bunsen...}}
-  {{/block-slot}}
-  {{#block-slot 'view' as |selections|}}
-   {{frost-list...}}
-  {{/block-slot}}
-  {{#block-slot 'actions' as |controls selections|}}
-    {{controls.button
-      onClick=(action 'edit')
-      priority='secondary'
-      text='Edit'
-    }}
-    {{#controls.link 'details'
-      multiSelect=true
-      priority='primary'
-    }}
-      Details
-    {{/controls.link}}
-  {{/block-slot}}
-{{/frost-object-browser}}
-```
-
-## Inline API (Deprecated)
-
-| Attribute | Type | Value | Description |
-| --------- | ---- | ----- | ----------- |
-| ` ` | ` ` | ` ` | Coming soon |
-
 ## Examples
 ### Template:
 ```handlebars
-{#frost-object-browser-inline
-  facets=model.facets
-  filters=filters
-  model=model.model
-  onCreate=(action "onCreate")
-  onDetailChange=(action "onDetailChange")
-  onFacetChange=(action "onOptionSelected")
-  onFilter=onFilter
-  onRowSelect=(action "onRowSelect")
-  title="Resources"
-  values=model.visibleResources
-  viewSchema=viewSchema
+{{frost-object-browser
+  filters=(component 'frost-bunsen-form'
+    autofocus=false
+    bunsenModel=filterModel
+    bunsenView=filterView
+    onChange=(action 'onFilteringChange')
+    value=filters
+  )
+  content=(component 'frost-list'
+    item=(component 'list-item')
+    itemExpansion=(component 'list-item-expansion')
+    items=items
+    selectedItems=selectedItems
+    onSelectionChange=(action 'onSelectionChange')
+    pagination=(component 'frost-list-pagination'
+      itemsPerPage=itemsPerPage
+      page=page
+      total=totalItems
+      onChange=(action 'onPaginationChange')
+    )
+    sorting=(component 'frost-sort'
+      sortOrder=sortOrder
+      sortingProperties=sortingProperties
+      onChange=(action 'onSortingChange')
+    )
+  )
+  controls=(component 'frost-action-bar'
+    selectedItems=selectedItems
+    controls=(array
+      (component 'frost-button'
+        disabled=(single-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Single-select'
+        onClick=(action 'onGenericAction' selectedItems 'Single-select enabled action')
+      )
+      (component 'frost-button'
+        disabled=(multi-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Multi-select'
+        onClick=(action 'onGenericAction' selectedItems 'Multi-select enabled action')
+      )
+      (component 'frost-button'
+        disabled=(not labelIncludesF)
+        priority='secondary'
+        size='medium'
+        text="Label includes 'f'"
+        onClick=(action 'onGenericAction' selectedItems 'Custom enabled action')
+      )
+      (component 'frost-link'
+        priority='primary'
+        routeNames=detailLinkRouteNames
+        size='medium'
+        text='Detail'
+      )
+    )
+  )
 }}
-  {{block-slot slot 'actions'}}
-    <!-- actions go here -->
-  {{/block-slot}}
-{{/frost-object-browser-inline}}
 ```
 
 ### Controller:
-```
-  viewSchema: {
-    low: {
-      'version': '1.0',
-      'type': 'form',
-      'rootContainers': [
-        {'label': 'Main', 'container': 'main'}
-      ],
-      'containers': [
-        {
-          'id': 'main',
-          'className': 'flex-row',
-          'rows': [
-            [
-              {'model': 'alias', 'labelClassName': 'ob-label', 'inputClassName': 'ob-input'}
-            ],
-            [
-              {
-                'model': 'updatedAt',
-                'label': 'Last Updated',
-                'labelClassName': 'ob-label',
-                'inputClassName': 'ob-input'
-              }
-            ]
-          ]
-        }
-      ]
-    }
-  }
-```
 
-Your controller will also need to implement the following callbacks:
+Your controller can implement the following callbacks:
 
-`onCreate () {…}`
-`onDetailChange (level) {…}`
-`onFilter (filterState) {...} //Optional, used with filters`
-`onRowSelect (allSelected, newSelected, deSelected) {…}`
+`onExpansionChange () {…}`
+`onFilteringChange (filterState) {...} //Optional, used with filters`
+`onPaginationChange (page) {…}`
+`onSelectionChange (selectedItems) {…}`
+`onSortingChange (sortOrder) {…}`
 
 You can also check out the demo app bundled with this addon to see an example of using this addon.
-
-###Adding filters
-An optional `filters` attribute can be passed to the component. `filters` should be an array of objects
-
-```javascript
-    filters: [{
-      label: 'A label for the filter',
-      name: '', // Key for filter state hash
-      type: 'select', // Currently only 'select' type is supported
-      clearable: true, // Whether or not the value can be cleared
-      showing: true,  // True for expanded and false for collapsed, optional
-      selectedValue: 'value', // Value in the list to set as selected, should match
-                              // the value attribute of an item in the 'data' list
-
-      // List of values
-      data: [{
-        label: 'Label for an item',
-        value: 'value'
-      }]
-    }]
-
-```
-
-Currently `frost-select` style filters are supported.
-
-When a filter is changed or cleared, the `onFilter` callback is called with the argument
-`filterState`, which is a hash where the keys correspond to the filter names and the value is
-the value currently reported by the filter.
 
 ## Development
 ### Setup
