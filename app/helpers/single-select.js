@@ -1,1 +1,1 @@
-export {default, singleSelect} from 'ember-frost-object-browser/helpers/single-select'
+export {default} from 'ember-frost-object-browser/helpers/single-select'

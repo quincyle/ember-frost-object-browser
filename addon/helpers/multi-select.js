@@ -2,12 +2,12 @@ import Ember from 'ember'
 const {Helper, isArray} = Ember
 
 /*
- *  Returns false if one or more items are selectedItems
-*/
+ * Returns false if one or more items are selectedItems
+ * @param {Array} selectedItems
+ * @see {@link https://github.com/emberjs/ember.js/issues/11867}
+ * @returns {Boolean}
+ */
 
-export function multiSelect ([selectedItems]) {
-  return isArray(selectedItems) && selectedItems.length === 0
-}
 export default Helper.extend({
   destroy () {
     if (this.teardown) this.teardown()

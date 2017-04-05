@@ -2,8 +2,11 @@ import Ember from 'ember'
 const {Helper, isArray} = Ember
 
 /*
- *  Returns false if one and only one item is in selectedItems
-*/
+ * Returns false if one and only one item is in selectedItems
+ * @param {Array} selectedItems
+ * @see {@link https://github.com/emberjs/ember.js/issues/11867}
+ * @returns {Boolean}
+ */
 export default Helper.extend({
   destroy () {
     if (this.teardown) this.teardown()
