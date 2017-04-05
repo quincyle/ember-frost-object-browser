@@ -8,14 +8,12 @@ var Router = EmberRouter.extend({
 })
 
 Router.map(function () {
+  this.route('overview', {path: '/'})
+  this.route('helpers')
   this.route('client')
-  this.route('server', {path: '/'})
-
-  this.route('demo', function () {
-    this.route('client')
-    this.route('server')
-  })
-  this.route('user', {path: '/user/:id'})
+  this.route('client-code')
+  this.route('server')
+  this.route('server-code')
 })
 
 export default Router

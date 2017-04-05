@@ -1,8 +1,27 @@
 {{frost-select-outlet hook='demo'}}
 {{notification-container position="top-right"}}
 
-<div class="dummy-body">
-	<div class="dummy-content">
-		{{outlet}}
-	</div>
+<div class='frost-modal-demo'>
+  <div class='frost-modal-demos'>
+    <div class='frost-modal-demo-title'>
+      Demos
+    </div>
+    {{#frost-scroll class='frost-modal-demo-selectors'}}
+      {{#link-to 'overview'}}Overview{{/link-to}}
+      {{#link-to 'helpers'}}Helpers{{/link-to}}
+      <div class='frost-modal-demo-selector-title'>
+        Client side control flow
+        {{#link-to 'client'}}Demo{{/link-to}}
+        {{#link-to 'client-code'}}Code{{/link-to}}
+      </div>
+      <div class='frost-modal-demo-selector-title'>
+        Server side control flow
+        {{#link-to 'server'}}Demo{{/link-to}}
+        {{#link-to 'server-code'}}Code{{/link-to}}
+      </div>
+    {{/frost-scroll}}
+  </div>
+  {{#frost-scroll class='frost-modal-demo-example'}}
+    {{outlet}}
+  {{/frost-scroll}}
 </div>

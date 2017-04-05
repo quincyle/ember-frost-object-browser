@@ -104,6 +104,11 @@ export default Controller.extend({
   // == Actions ===============================================================
 
   actions: {
+    // BEGIN-SNIPPET client-controller
+    onExpansionChange (expandedItems) {
+      this.get('expandedItems').setObjects(expandedItems)
+    },
+
     onFilteringChange (filters) {
       this.set('filters', _.cloneDeep(filters))
       this.store.unloadAll('list-item')
@@ -112,7 +117,7 @@ export default Controller.extend({
     },
 
     onGenericAction (selectedItems, message) {
-      this.get('notifications').success('Generic action', {
+      this.get('notifications').success(message, {
         autoClear: true,
         clearDuration: 2000
       })
@@ -136,5 +141,6 @@ export default Controller.extend({
       this.get('selectedItems').clear()
       this.fetchPage(0)
     }
+    // END-SNIPPET
   }
 })
