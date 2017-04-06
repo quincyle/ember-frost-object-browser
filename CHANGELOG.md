@@ -1,3 +1,9 @@
+# 17.0.11 (2017-04-06)
+
+- upgrade ember to 2.11
+- fix for issue #68
+
+
 # 17.0.10 (2017-04-05)
 demo page updates + package updates
 
