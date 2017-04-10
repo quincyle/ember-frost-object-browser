@@ -12,10 +12,8 @@
 # ember-frost-object-browser
 
  * [Installation](#installation)
- * [API](#api)
- * [Inline API](#inline-api)
  * [Examples](#examples)
- * [Contributing](#contributing)
+ * [Development](#development)
 
 ## Installation
 ```
@@ -90,13 +88,15 @@ ember install ember-frost-object-browser
 
 Your controller can implement the following callbacks:
 
-`onExpansionChange () {…}`
-`onFilteringChange (filterState) {...} //Optional, used with filters`
-`onPaginationChange (page) {…}`
-`onSelectionChange (selectedItems) {…}`
-`onSortingChange (sortOrder) {…}`
+```javascript
+onExpansionChange () {…}
+onFilteringChange (filterState) {...} //Optional, used with filters
+onPaginationChange (page) {…}
+onSelectionChange (selectedItems) {…}
+onSortingChange (sortOrder) {…}
+```
 
-You can also check out the demo app bundled with this addon to see an example of using this addon.
+Check out http://ciena-frost.github.io/ember-frost-object-browser/ for the demo app bundled with this addon to see an example of using this addon.
 
 ## Development
 ### Setup
