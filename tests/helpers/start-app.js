@@ -1,13 +1,16 @@
+/* eslint-disable ember-standard/destructure */
 import Ember from 'ember'
-const {merge, run} = Ember
+const {run} = Ember
 import Application from '../../app'
 import config from '../../config/environment'
+
+const assign = Object.assign || Ember.assign || Ember.merge
 
 export default function startApp (attrs) {
   let application
 
-  let attributes = merge({}, config.APP)
-  attributes = merge(attributes, attrs) // use defaults, but you can override;
+  let attributes = assign({}, config.APP)
+  attributes = assign(attributes, attrs) // use defaults, but you can override;
 
   run(() => {
     application = Application.create(attributes)
