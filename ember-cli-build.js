@@ -13,7 +13,7 @@ module.exports = function (defaults) {
       includePaths: [
       ]
     },
-    snippetPaths: ['snippets', 'tests/snippets']
+    snippetSearchPaths: ['tests/dummy/app']
   })
 
   return app.toTree()
