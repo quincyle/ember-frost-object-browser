@@ -102,5 +102,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "pr-bumper": {
+    "coverage": 82.26
   }
 }
