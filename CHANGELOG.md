@@ -1,3 +1,7 @@
+# 17.0.12 (2017-04-10)
+Put back the Ember assign usage
+
+
 # 17.0.11 (2017-04-06)
 
 - upgrade ember to 2.11
