@@ -1,3 +1,7 @@
+# 17.0.13 (2017-04-21)
+* **Added** blueprint check
+
+
 # 17.0.12 (2017-04-10)
 Put back the Ember assign usage
 
