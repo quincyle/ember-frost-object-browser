@@ -3,10 +3,10 @@
  */
 
 import {expect} from 'chai'
+import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
-import {registerMockComponent, unregisterMockComponent} from '../../helpers/mock-component'
 
 const test = integration('frost-object-browser')
 describe(test.label, function () {
@@ -31,7 +31,9 @@ describe(test.label, function () {
   })
 
   afterEach(function () {
-    unregisterMockComponent(this)
+    unregisterMockComponent(this, 'mock-content')
+    unregisterMockComponent(this, 'mock-controls')
+    unregisterMockComponent(this, 'mock-filters')
   })
 
   it('should render a component passed into the "content" property', function () {
