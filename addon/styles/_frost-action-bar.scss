@@ -20,6 +20,10 @@ $frost-action-bar-background-color: rgba($frost-color-white, 0.85);
     font-size: $frost-font-s;
   }
 
+  &-buttons {
+    display: flex;
+  }
+
   &-buttons > * {
     margin-left: 10px;
   }
