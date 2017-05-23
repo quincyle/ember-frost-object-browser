@@ -1,3 +1,7 @@
+# 17.0.15 (2017-05-23)
+* Fixes https://github.com/ciena-frost/ember-frost-object-browser/issues/117
+  * Fix misaligned action bar buttons on Firefox
+
 # 17.0.14 (2017-05-10)
 * **Updated** the secure auth tokens in `.travis.yml`
 
