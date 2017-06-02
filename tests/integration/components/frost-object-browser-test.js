@@ -19,15 +19,6 @@ describe(test.label, function () {
     this.setProperties({
       myHook: 'myObjectBrowser'
     })
-
-    this.render(hbs`
-      {{frost-object-browser
-        hook=myHook
-        content=(component 'mock-content' class='mock-content')
-        controls=(component 'mock-controls' class='mock-controls')
-        filters=(component 'mock-filters' class='mock-filters')
-      }}
-    `)
   })
 
   afterEach(function () {
@@ -36,15 +27,66 @@ describe(test.label, function () {
     unregisterMockComponent(this, 'mock-filters')
   })
 
-  it('should render a component passed into the "content" property', function () {
-    expect(this.$('.mock-content')).to.have.length(1)
+  describe('after render', function () {
+    beforeEach(function () {
+      this.render(hbs`
+        {{frost-object-browser
+          hook=myHook
+          hookQualifiers=(hash)
+          content=(component 'mock-content' class='mock-content')
+          controls=(component 'mock-controls' class='mock-controls')
+          filters=(component 'mock-filters' class='mock-filters')
+        }}
+      `)
+    })
+
+    it('should render a component passed into the "content" property', function () {
+      expect(this.$('.mock-content')).to.have.length(1)
+    })
+
+    it('should render a component passed into the "controls" property', function () {
+      expect(this.$('.mock-controls')).to.have.length(1)
+    })
+
+    it('should render a component passed into the "filters" property', function () {
+      expect(this.$('.mock-filters')).to.have.length(1)
+    })
+
+    it('should render the refine by label in the facets', function () {
+      expect(this.$('.frost-object-browser-facets-header')).to.have.text('Refine by')
+    })
   })
 
-  it('should render a component passed into the "controls" property', function () {
-    expect(this.$('.mock-controls')).to.have.length(1)
-  })
+  describe('after render, when given a new refineByLabel', function () {
+    beforeEach(function () {
+      this.render(hbs`
+        {{frost-object-browser
+          hook=myHook
+          hookQualifiers=(hash)
+          content=(component 'mock-content' class='mock-content')
+          controls=(component 'mock-controls' class='mock-controls')
+          filters=(component 'mock-filters' class='mock-filters')
+          i18n=(hash
+            refineByLabel='Filtrar por'
+          )
+        }}
+      `)
+    })
 
-  it('should render a component passed into the "filters" property', function () {
-    expect(this.$('.mock-filters')).to.have.length(1)
+    it('should render a component passed into the "content" property', function () {
+      expect(this.$('.mock-content')).to.have.length(1)
+    })
+
+    it('should render a component passed into the "controls" property', function () {
+      expect(this.$('.mock-controls')).to.have.length(1)
+    })
+
+    it('should render a component passed into the "filters" property', function () {
+      expect(this.$('.mock-filters')).to.have.length(1)
+    })
+
+    it('should render the refine by label in the facets', function () {
+      expect(this.$('.frost-object-browser-facets-header')).to.have.text('Filtrar por')
+    })
   })
 })

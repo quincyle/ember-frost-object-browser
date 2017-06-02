@@ -1,29 +1,39 @@
 <div class='frost-modal-demo-notes'>
   <p>
     <b>ember-frost-object-browser</b> is a pattern that provides options for the user to be able to pass in
-  components for the content areas within the pattern.
+    components for the content areas within the pattern.
   </p>
 
   <p>
     The implementor provides the component for each slot using recommended
-  Frost components.  This allows the full interface/features of each
-  sub-component to be used and makes swapping sub-components simple.
+    Frost components.  This allows the full interface/features of each
+    sub-component to be used and makes swapping sub-components simple.
   </p>
 
   <ul>
-    <li>The 'filters' slot - <a href='https://github.com/ciena-frost/ember-frost-bunsen'>ember-frost-bunsen</a>
-       is the recommended sub-component for usage as a filter form</li>
-    <li>The 'content' slot - <a href='https://github.com/ciena-frost/ember-frost-list'>ember-frost-list</a>
+    <li>
+      The 'filters' slot - <a href='https://github.com/ciena-frost/ember-frost-bunsen'>ember-frost-bunsen</a>
+      is the recommended sub-component for usage as a filter form
+    </li>
+    <li>
+      The 'content' slot - <a href='https://github.com/ciena-frost/ember-frost-list'>ember-frost-list</a>
       is the recommended component to display content.
-      Paging and sort components can be passed to the frost-list component</li>
-      <ul>
-        <li>ember-frost-list provides a <b>frost-list-pagination</b> component that can be used for
-        paging controls</li>
-        <li><a href='https://github.com/ciena-frost/ember-frost-sort'>ember-frost-sort</a> can be used for
-          sorting controls</li>
-      </ul>
-    <li>The 'controls' slot  - <b>frost-action-bar</b> provides controls (button, link) that are coupled
-    to the selection state. {{#link-to 'helpers'}}Helpers{{/link-to}} are provided to simplify setting up the state of the action buttons</li>
+      Paging and sort components can be passed to the frost-list component
+    </li>
+    <ul>
+      <li>
+        ember-frost-list provides a <b>frost-list-pagination</b> component that can be used for paging controls
+      </li>
+      <li>
+        <a href='https://github.com/ciena-frost/ember-frost-sort'>ember-frost-sort</a> can be used
+        for sorting controls
+      </li>
+    </ul>
+    <li>
+      The 'controls' slot  - <b>frost-action-bar</b> provides controls (button, link) that are coupled
+      to the selection state. {{#link-to 'helpers'}}Helpers{{/link-to}} are provided to simplify setting up the
+      state of the action buttons
+    </li>
     <br>Refer to the documentation available in each of these projects for the appropriate usage.
   </ul>
 

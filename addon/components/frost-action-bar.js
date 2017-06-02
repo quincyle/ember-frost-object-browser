@@ -23,10 +23,16 @@ export default Component.extend({
   propTypes: {
     // options
     controls: PropTypes.arrayOf(PropTypes.EmberComponent).isRequired,
+    i18n: PropTypes.shape({
+      formatSelectedItemsLabel: PropTypes.func.isRequired
+    }),
     selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.EmberObject,
       PropTypes.object
-    ])).isRequired
+    ])).isRequired,
+
+    // callbacks
+    getSelectedItemsLabel: PropTypes.func
 
     // state
   },
@@ -34,6 +40,14 @@ export default Component.extend({
   getDefaultProps () {
     return {
       // options
+      i18n: {
+        formatSelectedItemsLabel (count) {
+          const items = (count > 1) ? 'Items' : 'Item'
+          return `${count} ${items} selected`
+        }
+      }
+
+      // callbacks
 
       // state
     }
@@ -45,6 +59,12 @@ export default Component.extend({
   @computed('selectedItems.[]')
   isVisible (selectedItems) {
     return !isEmpty(selectedItems)
+  },
+
+  @readOnly
+  @computed('selectedItems.[]')
+  selectedItemsLabel (selectedItems) {
+    return this.i18n.formatSelectedItemsLabel(selectedItems.length)
   }
 
   // == Functions =============================================================

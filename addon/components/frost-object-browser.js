@@ -8,16 +8,23 @@ export default Component.extend({
   layout,
   // == Properties ============================================================
   propTypes: {
-    // Options
+    // options
     content: PropTypes.EmberComponent.isRequired,
     controls: PropTypes.EmberComponent.isRequired,
-    hook: PropTypes.string.isRequired,
-    filters: PropTypes.EmberComponent.isRequired
-    // State
+    filters: PropTypes.EmberComponent.isRequired,
+    i18n: PropTypes.shape({
+      refineByLabel: PropTypes.string.isRequired
+    })
+
+    // state
   },
 
   getDefaultProps () {
-    return {}
+    return {
+      i18n: {
+        refineByLabel: 'Refine by'
+      }
+    }
   }
 
   // == Computed Properties ===================================================

@@ -1,6 +1,6 @@
 {{! Template for the frost-action-bar component }}
 <div class='{{css}}-selections'>
-  {{string-pluralize selectedItems.length 'Item'}} selected
+  {{selectedItemsLabel}}
 </div>
 <div class='{{css}}-buttons'>
   {{#each controls as |control|}}
