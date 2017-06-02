@@ -64,7 +64,7 @@ export default Component.extend({
   @readOnly
   @computed('selectedItems.[]')
   selectedItemsLabel (selectedItems) {
-    return this.getSelectedItemsLabel(selectedItems.length)
+    return this.i18n.formatSelectedItemsLabel(selectedItems.length)
   }
 
   // == Functions =============================================================
