@@ -26,7 +26,10 @@ export default Component.extend({
     selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.EmberObject,
       PropTypes.object
-    ])).isRequired
+    ])).isRequired,
+
+    // callbacks
+    getSelectedItemsLabel: PropTypes.func
 
     // state
   },
@@ -34,6 +37,12 @@ export default Component.extend({
   getDefaultProps () {
     return {
       // options
+
+      // callbacks
+      getSelectedItemsLabel (count) {
+        const items = (count > 1) ? 'Items' : 'Item'
+        return `${count} ${items} selected`
+      }
 
       // state
     }
@@ -45,6 +54,12 @@ export default Component.extend({
   @computed('selectedItems.[]')
   isVisible (selectedItems) {
     return !isEmpty(selectedItems)
+  },
+
+  @readOnly
+  @computed('selectedItems.[]')
+  selectedItemsLabel (selectedItems) {
+    return this.getSelectedItemsLabel(selectedItems.length)
   }
 
   // == Functions =============================================================

@@ -11,13 +11,16 @@ export default Component.extend({
     // Options
     content: PropTypes.EmberComponent.isRequired,
     controls: PropTypes.EmberComponent.isRequired,
-    hook: PropTypes.string.isRequired,
-    filters: PropTypes.EmberComponent.isRequired
+    filters: PropTypes.EmberComponent.isRequired,
+
+    refineByLabel: PropTypes.string
     // State
   },
 
   getDefaultProps () {
-    return {}
+    return {
+      refineByLabel: 'Refine by'
+    }
   }
 
   // == Computed Properties ===================================================

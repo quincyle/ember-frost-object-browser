@@ -96,7 +96,8 @@ onSelectionChange (selectedItems) {…}
 onSortingChange (sortOrder) {…}
 ```
 
-Check out http://ciena-frost.github.io/ember-frost-object-browser/ for the demo app bundled with this addon to see an example of using this addon.
+Check out http://ciena-frost.github.io/ember-frost-object-browser/ for the demo app bundled with this addon to see
+an example of using this addon.
 
 ## Development
 ### Setup
