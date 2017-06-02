@@ -1,3 +1,11 @@
+# 17.1.0 (2017-06-02)
+ * **Fixed** prop type warning caused by not setting `hook` on `frost-scroll`
+ * **Enabled** prop types to throw errors instead of warnings, so errors like the above don't happen again
+ * **Added** an optional `refineByLabel` to `frost-object-browser` to better support `i18n`, allowing consumers to pass in a translated label (nested under an `i18n` property).
+ * **Added** an optional `getSelectedItemsLabel` callback to `frost-action-bar` to better support `i18n`, allowing consumers to provide a callback that will generate a translated label based on the number of selected items (nested under an `i18n` property).
+ * **Deprecated** the `string-pluralize` helper as it's no longer needed by this addon and should be removed in the next major version. 
+
+
 # 17.0.15 (2017-05-23)
 * Fixes https://github.com/ciena-frost/ember-frost-object-browser/issues/117
   * Fix misaligned action bar buttons on Firefox
