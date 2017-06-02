@@ -66,7 +66,9 @@ describe(test.label, function () {
           content=(component 'mock-content' class='mock-content')
           controls=(component 'mock-controls' class='mock-controls')
           filters=(component 'mock-filters' class='mock-filters')
-          refineByLabel='Filtrar por'
+          i18n=(hash
+            refineByLabel='Filtrar por'
+          )
         }}
       `)
     })

@@ -8,18 +8,22 @@ export default Component.extend({
   layout,
   // == Properties ============================================================
   propTypes: {
-    // Options
+    // options
     content: PropTypes.EmberComponent.isRequired,
     controls: PropTypes.EmberComponent.isRequired,
     filters: PropTypes.EmberComponent.isRequired,
+    i18n: PropTypes.shape({
+      refineByLabel: PropTypes.string.isRequired
+    })
 
-    refineByLabel: PropTypes.string
-    // State
+    // state
   },
 
   getDefaultProps () {
     return {
-      refineByLabel: 'Refine by'
+      i18n: {
+        refineByLabel: 'Refine by'
+      }
     }
   }
 

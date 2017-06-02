@@ -69,12 +69,12 @@ describe(test.label, function () {
   })
 
   describe('after render with a custom getSelectedItemsLabel()', function () {
-    let getSelectedItemsLabel, selectedItems
+    let formatSelectedItemsLabel, selectedItems
     beforeEach(function () {
-      getSelectedItemsLabel = sandbox.stub().returns('foo-bar')
+      formatSelectedItemsLabel = sandbox.stub().returns('foo-bar')
       selectedItems = [{}, {}, {}]
       this.setProperties({
-        getSelectedItemsLabel,
+        formatSelectedItemsLabel,
         selectedItems
       })
 
@@ -83,15 +83,16 @@ describe(test.label, function () {
           controls=(array (component 'mock-controls' class='mock-controls'))
           hook='bar'
           hookQualifiers=(hash)
+          i18n=(hash
+            formatSelectedItemsLabel=formatSelectedItemsLabel
+          )
           selectedItems=selectedItems
-
-          getSelectedItemsLabel=getSelectedItemsLabel
         }}
       `)
     })
 
     it('should call the provided method to generate the label', function () {
-      expect(getSelectedItemsLabel).to.have.been.calledWith(3)
+      expect(formatSelectedItemsLabel).to.have.been.calledWith(3)
     })
 
     it('should render the returned label', function () {
@@ -100,13 +101,13 @@ describe(test.label, function () {
 
     describe('when another item is selected', function () {
       beforeEach(function () {
-        getSelectedItemsLabel.withArgs(4).returns('fizz-bang')
+        formatSelectedItemsLabel.withArgs(4).returns('fizz-bang')
         this.set('selectedItems', [{}, {}, {}, {}])
         return wait()
       })
 
       it('should re-calcualte the label', function () {
-        expect(getSelectedItemsLabel).to.have.been.calledWith(4)
+        expect(formatSelectedItemsLabel).to.have.been.calledWith(4)
       })
 
       it('should render the returned label', function () {

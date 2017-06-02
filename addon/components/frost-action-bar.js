@@ -23,6 +23,9 @@ export default Component.extend({
   propTypes: {
     // options
     controls: PropTypes.arrayOf(PropTypes.EmberComponent).isRequired,
+    i18n: PropTypes.shape({
+      formatSelectedItemsLabel: PropTypes.func.isRequired
+    }),
     selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.EmberObject,
       PropTypes.object
@@ -37,12 +40,14 @@ export default Component.extend({
   getDefaultProps () {
     return {
       // options
+      i18n: {
+        formatSelectedItemsLabel (count) {
+          const items = (count > 1) ? 'Items' : 'Item'
+          return `${count} ${items} selected`
+        }
+      }
 
       // callbacks
-      getSelectedItemsLabel (count) {
-        const items = (count > 1) ? 'Items' : 'Item'
-        return `${count} ${items} selected`
-      }
 
       // state
     }
