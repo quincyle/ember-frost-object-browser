@@ -23,6 +23,7 @@ export default Component.extend({
   propTypes: {
     // options
     controls: PropTypes.arrayOf(PropTypes.EmberComponent).isRequired,
+    // FIXME: for next major release, make this `i18n.messages.selectedItems()` (@job13er 2017-06-06)
     i18n: PropTypes.shape({
       formatSelectedItemsLabel: PropTypes.func.isRequired
     }),
