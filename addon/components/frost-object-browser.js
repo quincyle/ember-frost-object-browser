@@ -12,6 +12,7 @@ export default Component.extend({
     content: PropTypes.EmberComponent.isRequired,
     controls: PropTypes.EmberComponent.isRequired,
     filters: PropTypes.EmberComponent.isRequired,
+    // FIXME: For the next major release, make this `i18n.labels.refineBy` (@job13er 2017-06-06)
     i18n: PropTypes.shape({
       refineByLabel: PropTypes.string.isRequired
     })
