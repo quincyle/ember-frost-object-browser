@@ -1,3 +1,6 @@
+# 17.1.1 (2017-06-06)
+* **Fixed** `config/environment.js` to no longer affect consumer's environment (resolves [#24](https://github.com/ciena-frost/ember-frost-object-browser/issues/124))
+
 # 17.1.0 (2017-06-02)
  * **Fixed** prop type warning caused by not setting `hook` on `frost-scroll`
  * **Enabled** prop types to throw errors instead of warnings, so errors like the above don't happen again
