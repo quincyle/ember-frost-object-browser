@@ -54,7 +54,6 @@ script:
 - .travis/maybe-bump-version.sh
 
 after_success:
-- yarn config delete ignore-engines
 - .travis/maybe-publish-coverage.sh
 - .travis/maybe-publish-gh-pages.sh
 
