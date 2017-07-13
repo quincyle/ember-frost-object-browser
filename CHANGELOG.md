@@ -1,3 +1,6 @@
+# 17.1.2 (2017-07-13)
+* Upgrade to `ember-cli` `2.12.3`
+
 # 17.1.1 (2017-06-06)
 * **Fixed** `config/environment.js` to no longer affect consumer's environment (resolves [#24](https://github.com/ciena-frost/ember-frost-object-browser/issues/124))
 
