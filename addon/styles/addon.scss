@@ -40,15 +40,13 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
 
   &.filter-visible {
     .frost-object-browser-facets-collapsed-view {
-      position: absolute;
-      visibility: hidden;
+      display: none;
     }
   }
 
   &.filter-invisible {
     .frost-object-browser-facets-expanded-view {
-      position: absolute;
-      visibility: hidden;
+      display: none;
     }
   }
 

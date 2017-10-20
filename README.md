@@ -24,6 +24,8 @@ ember install ember-frost-object-browser
 ### Template:
 ```handlebars
 {{frost-object-browser
+  filterVisible=filterVisible
+  onFilterVisibleChange=(action (mut filterVisible))
   filters=(component 'frost-bunsen-form'
     autofocus=false
     bunsenModel=filterModel
