@@ -1,8 +1,4 @@
 /**
- * TODO Controls utilities
- */
-
-/**
  * Takes a hash of types with controls and returns a subset of only the controls that are common across each type.
  * Each key of the object is a type, and each value is an array of associated controls that are applicable to that type.
  *

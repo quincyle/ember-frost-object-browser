@@ -86,7 +86,7 @@ export default Component.extend({
   @readOnly
   @computed('isVisible', 'isControlsObject', 'controls', 'selectedItems.[]')
   _controls (isVisible, isControlsObject, controls, selectedItems) {
-    if (isVisible && isControlsObject && isPresent(controls) && isPresent(selectedItems)) {
+    if (isVisible && isControlsObject && isPresent(selectedItems)) {
       return applicableControls(this.selectedTypesWithControls(selectedItems)).map((controlName) => {
         return controls[controlName]
       })
