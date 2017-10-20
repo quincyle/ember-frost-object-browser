@@ -21,6 +21,7 @@ export default Controller.extend({
 
   expandedItems: [],
   filters: {},
+  filterVisible: true,
   filterModel: {
     type: 'object',
     properties: {

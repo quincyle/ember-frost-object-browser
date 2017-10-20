@@ -22,6 +22,7 @@ export default Controller.extend({
   // == Properties ============================================================
 
   filters: {},
+  filterVisible: true,
   filterModel: {
     type: 'object',
     properties: {
