@@ -105,9 +105,11 @@ export default Component.extend({
     if (isPresent(componentKeyNamesForTypes) && isPresent(itemTypeKey)) {
       return selectedItems.reduce((typesWithControls, item) => {
         const itemType = get(item, itemTypeKey)
-        const itemTypeContent = getWithDefault(componentKeyNamesForTypes, itemType, {})
-        const itemTypeContentControls = getWithDefault(itemTypeContent, get(componentKeyNames, 'controls'), [])
-        typesWithControls[itemType] = itemTypeContentControls
+        if (itemType) {
+          const itemTypeContent = getWithDefault(componentKeyNamesForTypes, itemType, {})
+          const itemTypeContentControls = getWithDefault(itemTypeContent, get(componentKeyNames, 'controls'), [])
+          typesWithControls[itemType] = itemTypeContentControls
+        }
         return typesWithControls
       }, {})
     }

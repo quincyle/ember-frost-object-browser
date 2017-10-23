@@ -8,7 +8,7 @@
 export function applicableControls (typesWithControlNames) {
   return Object.keys(typesWithControlNames).reduce((controlNames, control) => {
     return _intersect(controlNames, typesWithControlNames[control])
-  }, typesWithControlNames[Object.keys(typesWithControlNames)[0]])
+  }, typesWithControlNames[Object.keys(typesWithControlNames)[0]]) || []
 }
 
 function _intersect (a, b) {
