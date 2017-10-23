@@ -96,7 +96,7 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "5.6.0",
     "ember-frost-core": "1.23.10",
-    "ember-frost-list": "5.8.2"
+    "ember-frost-list": "6.1.2"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
