@@ -17,6 +17,7 @@ export default Controller.extend({
 
   // == Properties ============================================================
 
+  expandedItems: [],
   filters: {},
   filterModel: {
     type: 'object',
@@ -39,6 +40,44 @@ export default Controller.extend({
     {label: 'Label', value: 'label'}
   ],
   totalItems: 100, // Typically extracted from meta on the request
+  componentKeyNames: {
+    controls: 'controlNames'
+  },
+  componentKeyNamesForTypes: {
+    a: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'singleSelect'
+      ]
+    },
+    b: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'multiSelect',
+        'includesF'
+      ]
+    },
+    c: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'includesF'
+      ]
+    },
+    d: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'detailsButton'
+      ]
+    },
+    default: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion'
+    }
+  },
 
   // == Computed Properties ===================================================
 
@@ -100,7 +139,7 @@ export default Controller.extend({
   // == Actions ===============================================================
 
   actions: {
-    // BEGIN-SNIPPET client-controller
+    // BEGIN-SNIPPET client-typed-controller
     onExpansionChange (expandedItems) {
       this.get('expandedItems').setObjects(expandedItems)
     },

@@ -1,0 +1,82 @@
+{{! BEGIN-SNIPPET client-typed-template }}
+{{frost-object-browser
+  hook='clientObjectBrowser'
+  filters=(component 'frost-bunsen-form'
+    autofocus=false
+    bunsenModel=filterModel
+    bunsenView=filterView
+    onChange=(action 'onFilteringChange')
+    value=filters
+  )
+  content=(component 'frost-list'
+    hook='clientList'
+    componentKeyNamesForTypes=componentKeyNamesForTypes
+    itemDefinitions=(hash
+      list-item=(component 'list-item-typed')
+    )
+    itemExpansionDefinitions=(hash
+      list-item-expansion=(component 'list-item-expansion')
+    )
+    itemTypeKey='itemType'
+    item=(component 'list-item')
+    itemExpansion=(component 'list-item-expansion')
+    items=items
+    itemKey='id'
+    expandedItems=expandedItems
+    onExpansionChange=(action 'onExpansionChange')
+    selectedItems=selectedItems
+    onSelectionChange=(action 'onSelectionChange')
+    pagination=(component 'frost-list-pagination'
+      itemsPerPage=itemsPerPage
+      page=page
+      total=totalItems
+      onChange=(action 'onPaginationChange')
+    )
+    sorting=(component 'frost-sort'
+      sortOrder=sortOrder
+      sortingProperties=sortingProperties
+      onChange=(action 'onSortingChange')
+    )
+  )
+  controls=(component 'frost-action-bar'
+    hook='clientActionBar'
+    selectedItems=selectedItems
+    itemTypeKey='itemType'
+    componentKeyNames=componentKeyNames
+    componentKeyNamesForTypes=componentKeyNamesForTypes
+    controls=(hash
+      singleSelect=(component 'frost-button'
+        hook='clientSingleSelectButton'
+        disabled=(single-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Single-select'
+        onClick=(action 'onGenericAction' selectedItems 'Single-select enabled action')
+      )
+      multiSelect=(component 'frost-button'
+        hook='clientMultiSelectButton'
+        disabled=(multi-select selectedItems)
+        priority='secondary'
+        size='medium'
+        text='Multi-select'
+        onClick=(action 'onGenericAction' selectedItems 'Multi-select enabled action')
+      )
+      includesF=(component 'frost-button'
+        hook='clientLabelButton'
+        disabled=(not labelIncludesF)
+        priority='secondary'
+        size='medium'
+        text="Label includes 'f'"
+        onClick=(action 'onGenericAction' selectedItems 'Custom enabled action')
+      )
+      detailsButton=(component 'frost-link'
+        hook='clientDetailLink'
+        priority='primary'
+        routeNames=detailLinkRouteNames
+        size='medium'
+        text='Detail'
+      )
+    )
+  )
+}}
+{{! END-SNIPPET}}
