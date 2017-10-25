@@ -2,9 +2,9 @@ import {expect} from 'chai'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
-
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
+import sinon from 'sinon'
 
 const test = integration('frost-object-browser')
 describe(test.label, function () {
@@ -55,11 +55,11 @@ describe(test.label, function () {
       expect(this.$('.frost-object-browser-facets-header')).to.have.text('Refine by')
     })
 
-    it('without isFilterHiddenOnLoad, should display facets-expanded-view', function () {
+    it('should display facets-expanded-view without isFilterHiddenOnLoad', function () {
       expect($hook('myObjectBrowser-facets-expanded-view').is(':visible')).to.eql(true)
     })
 
-    it('without isFilterHiddenOnLoad, should hide facets-collapsed-view', function () {
+    it('should hide facets-collapsed-view without isFilterHiddenOnLoad', function () {
       expect($hook('myObjectBrowser-facets-collapsed-view').is(':visible')).to.eql(false)
     })
   })
@@ -140,7 +140,7 @@ describe(test.label, function () {
     beforeEach(function () {
       this.set('isFilterHiddenOnLoad', true)
 
-      this.render(hbs`
+      return this.render(hbs`
         {{frost-object-browser
           hook=myHook
           hookQualifiers=(hash)
@@ -172,6 +172,62 @@ describe(test.label, function () {
       it('should hide facets-collapsed-view', function () {
         expect($hook('myObjectBrowser-facets-collapsed-view').is(':visible')).to.eql(false)
       })
+    })
+  })
+
+  describe('when user subscribe to onFilterHide event', function () {
+    let hideFilter
+    beforeEach(function () {
+      hideFilter = sinon.spy()
+
+      this.set('isFilterHiddenOnLoad', false)
+      this.set('hideFilter', hideFilter)
+
+      return this.render(hbs`
+        {{frost-object-browser
+          hook=myHook
+          hookQualifiers=(hash)
+          content=(component 'mock-content' class='mock-content')
+          controls=(component 'mock-controls' class='mock-controls')
+          filters=(component 'mock-filters' class='mock-filters')
+          isFilterHiddenOnLoad=isFilterHiddenOnLoad
+          onFilterHide=(action hideFilter)
+        }}
+      `)
+    })
+
+    it('should call the handler hideFilter', function () {
+      $hook('myObjectBrowser-facets-collapse-control').click()
+
+      expect(hideFilter).to.have.callCount(1)
+    })
+  })
+
+  describe('when user subscribe to onFilterDisplay event', function () {
+    let displayFilter
+    beforeEach(function () {
+      displayFilter = sinon.spy()
+
+      this.set('isFilterHiddenOnLoad', false)
+      this.set('displayFilter', displayFilter)
+
+      return this.render(hbs`
+        {{frost-object-browser
+          hook=myHook
+          hookQualifiers=(hash)
+          content=(component 'mock-content' class='mock-content')
+          controls=(component 'mock-controls' class='mock-controls')
+          filters=(component 'mock-filters' class='mock-filters')
+          isFilterHiddenOnLoad=isFilterHiddenOnLoad
+          onFilterDisplay=(action displayFilter)
+        }}
+      `)
+    })
+
+    it('should call the handler displayFilter', function () {
+      $hook('myObjectBrowser-facets-expand-control').click()
+
+      expect(displayFilter).to.have.callCount(1)
     })
   })
 })
