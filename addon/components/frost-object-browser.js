@@ -8,7 +8,7 @@ export default Component.extend({
   layout,
 
   // == Keyword Properties ====================================================
-  classNameBindings: ['isFilterHiddenOnLoad:filter-invisible:filter-visible'],
+  classNameBindings: ['_isFilterHidden:filter-invisible:filter-visible'],
 
   // == Properties ============================================================
   propTypes: {
@@ -42,13 +42,17 @@ export default Component.extend({
   // == Functions =============================================================
 
   // == Ember Lifecycle Hooks =================================================
+  init () {
+    this._super(...arguments)
+    this.set('_isFilterHidden', this.get('isFilterHiddenOnLoad'))
+  },
 
   // == DOM Events ============================================================
 
   // == Actions ===============================================================
   actions: {
     collapseFilter () {
-      this.set('isFilterHiddenOnLoad', true)
+      this.set('_isFilterHidden', true)
 
       const callback = this.onFilterHide
       if (callback) {
@@ -57,7 +61,7 @@ export default Component.extend({
     },
 
     expandFilter () {
-      this.set('isFilterHiddenOnLoad', false)
+      this.set('_isFilterHidden', false)
 
       const callback = this.onFilterDisplay
       if (callback) {
