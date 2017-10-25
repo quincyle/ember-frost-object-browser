@@ -18,7 +18,6 @@ export default Controller.extend({
   // == Properties ============================================================
 
   filters: {},
-  filterVisible: true,
   filterModel: {
     type: 'object',
     properties: {
@@ -137,6 +136,20 @@ export default Controller.extend({
       this.store.unloadAll('list-item')
       this.get('selectedItems').clear()
       this.fetchPage(0)
+    },
+
+    displayFilter () {
+      this.get('notifications').success('Display filter section', {
+        autoClear: true,
+        clearDuration: 2000
+      })
+    },
+
+    hideFilter () {
+      this.get('notifications').success('Hide filter section', {
+        autoClear: true,
+        clearDuration: 2000
+      })
     }
     // END-SNIPPET
   }

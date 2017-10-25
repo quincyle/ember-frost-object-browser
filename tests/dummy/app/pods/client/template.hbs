@@ -1,8 +1,8 @@
 {{! BEGIN-SNIPPET client-template }}
 {{frost-object-browser
+  onFilterDisplay=(action 'displayFilter')
+  onFilterHide=(action 'hideFilter')
   hook='clientObjectBrowser'
-  filterVisible=filterVisible
-  onFilterVisibleChange=(action (mut filterVisible))
   filters=(component 'frost-bunsen-form'
     autofocus=false
     bunsenModel=filterModel

@@ -8,26 +8,29 @@ export default Component.extend({
   layout,
 
   // == Keyword Properties ====================================================
-  classNameBindings: ['filterVisible:filter-visible:filter-invisible'],
+  classNameBindings: ['isFilterHiddenOnLoad:filter-invisible:filter-visible'],
 
   // == Properties ============================================================
   propTypes: {
-    // options
+    // required
     content: PropTypes.EmberComponent.isRequired,
     controls: PropTypes.EmberComponent.isRequired,
     filters: PropTypes.EmberComponent.isRequired,
-    filterVisible: PropTypes.bool.isRequired,
-    onFilterVisibleChange: PropTypes.func.isRequired,
     // FIXME: For the next major release, make this `i18n.labels.refineBy` (@job13er 2017-06-06)
     i18n: PropTypes.shape({
       refineByLabel: PropTypes.string.isRequired
-    })
+    }),
 
+    // options
+    isFilterHiddenOnLoad: PropTypes.bool,
+    onFilterDisplay: PropTypes.func,
+    onFilterHide: PropTypes.func
     // state
   },
 
   getDefaultProps () {
     return {
+      isFilterHiddenOnLoad: false,
       i18n: {
         refineByLabel: 'Refine by'
       }
@@ -45,11 +48,21 @@ export default Component.extend({
   // == Actions ===============================================================
   actions: {
     collapseFilter () {
-      this.onFilterVisibleChange(false)
+      this.set('isFilterHiddenOnLoad', true)
+
+      const callback = this.onFilterHide
+      if (callback) {
+        callback()
+      }
     },
 
     expandFilter () {
-      this.onFilterVisibleChange(true)
+      this.set('isFilterHiddenOnLoad', false)
+
+      const callback = this.onFilterDisplay
+      if (callback) {
+        callback()
+      }
     }
   }
 })
