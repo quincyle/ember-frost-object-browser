@@ -1,3 +1,7 @@
+# 17.2.0 (2017-10-23)
+* **Added** ability for object browser to render list list items with different types
+* **Added** ability for action bar to show certain controls based on list item type
+
 # 17.1.3 (2017-08-11)
 * **Updated** ember-cli 2.12.3 inter-dependencies
 * **Updated** pin `ember-cli-htmlbars-inline-precompile` per issue: https://github.com/ciena-frost/ember-frost-core/issues/488
