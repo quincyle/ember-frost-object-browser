@@ -1,6 +1,6 @@
 {
   "name": "ember-frost-object-browser",
-  "version": "17.2.0",
+  "version": "17.3.0",
   "description": "Object browser addon for ember apps.",
   "directories": {
     "doc": "doc",
@@ -102,7 +102,7 @@
     "configPath": "tests/dummy/config"
   },
   "pr-bumper": {
-    "coverage": 76.34
+    "coverage": 81.44
   },
   "ember-frost-icon-pack": {
     "name": "frost-object-browser"

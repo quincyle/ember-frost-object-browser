@@ -1,3 +1,10 @@
+# 17.3.0 (2017-10-26)
+* **Updated** the style for filter header section.
+* **Added** new interface `isFilterHiddenOnLoad`. When it sets to true, filter section will be hidden on load.
+* **Added** new interface `onFilterDisplay`. If consumer subscribes to the event, callback will be called when expanding the filter section.
+* **Added** new interface `onFilterHide`. If consumer subscribes to the event, callback will be called when collapsing the filter section.
+* **Added**  `filter.svg` and `filter-arrow` under `frost-object-browser` icon pack.
+
 # 17.2.0 (2017-10-23)
 * **Added** ability for object browser to render list list items with different types
 * **Added** ability for action bar to show certain controls based on list item type
