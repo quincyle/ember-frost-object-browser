@@ -77,7 +77,7 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       color: $frost-color-night-1;
       font-size: $frost-font-s;
 
@@ -86,6 +86,11 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
         height: 25px;
         margin-left: 10px;
       }
+    }
+
+    &-horizontal-divider {
+      height: 1px;
+      background-color: $frost-color-lgrey-1;
     }
 
     .frost-bunsen-input-text {
