@@ -1,5 +1,7 @@
 {{! BEGIN-SNIPPET client-template }}
 {{frost-object-browser
+  onFilterDisplay=(action 'displayFilter')
+  onFilterHide=(action 'hideFilter')
   hook='clientObjectBrowser'
   filters=(component 'frost-bunsen-form'
     autofocus=false
