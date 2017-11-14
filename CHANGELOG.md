@@ -1,3 +1,10 @@
+# 17.3.3 (2017-11-14)
+* **Updated** version of `ember-frost-bunsen`
+* **Removed** `ember-frost-date-picker` as it is now provided via `ember-frost-bunsen` dependencies
+* **Removed** `ember-pikaday-shim` as it is now provided via `ember-frost-date-picker` dependencies
+* **Removed** `pikaday` as it is now provided via `ember-pikaday-shim` dependencies
+
+
 # 17.3.2 (2017-11-14)
 * Remove unused `ember-simple-uuid` dependency
 
