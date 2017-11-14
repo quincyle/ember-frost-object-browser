@@ -1,3 +1,6 @@
+# 17.3.1 (2017-11-14)
+* #139 - Bind context to call of this._super.included() in index.js
+
 # 17.3.0 (2017-10-26)
 * **Updated** the style for filter header section.
 * **Added** new interface `isFilterHiddenOnLoad`. When it sets to true, filter section will be hidden on load.
