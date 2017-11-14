@@ -1,12 +1,14 @@
 import Ember from 'ember'
-const {A, Controller, inject, isEmpty} = Ember
+const {A, Controller, get, inject, isEmpty} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
+import {sort} from 'ember-frost-sort'
 import _ from 'lodash'
 
 export default Controller.extend({
 
   // == Dependencies ==========================================================
+
   notifications: inject.service('notification-messages'),
 
   // == Keyword Properties
@@ -28,12 +30,54 @@ export default Controller.extend({
     {label: 'Id', model: 'id'},
     {label: 'Label', model: 'label'}
   ]),
+  itemsPerPage: 10,
+  page: 0,
+  scrollTop: 0,
   selectedItems: [],
   sortOrder: ['id'],
   sortingProperties: [
     {label: 'Id', value: 'id'},
     {label: 'Label', value: 'label'}
   ],
+  totalItems: 100, // Typically extracted from meta on the request
+  componentKeyNames: {
+    controls: 'controlNames'
+  },
+  componentKeyNamesForTypes: {
+    a: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'singleSelect'
+      ]
+    },
+    b: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'multiSelect',
+        'includesF'
+      ]
+    },
+    c: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'includesF'
+      ]
+    },
+    d: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion',
+      controlNames: [
+        'detailsButton'
+      ]
+    },
+    default: {
+      itemName: 'list-item',
+      itemExpansionName: 'list-item-expansion'
+    }
+  },
 
   // == Computed Properties ===================================================
 
@@ -46,14 +90,29 @@ export default Controller.extend({
   },
 
   @readOnly
-  @computed('model.[]')
-  items (model) {
+  @computed('filters', 'model.[]', 'page', 'sortOrder.[]')
+  items (filters, model, page, sortOrder) {
     if (isEmpty(model)) {
       return []
     }
 
-    // Server handles filtering/sorting
-    return A(model.slice())
+    // Client side filtering
+    let filteredItems = model
+    if (!isEmpty(filters)) {
+      filteredItems = model.filter((item) => {
+        return A(Object.keys(filters)).every(key => {
+          return get(item, key).indexOf(get(filters, key)) >= 0
+        })
+      })
+    }
+
+    // Client side sorting
+    const sortedItems = sort(filteredItems, sortOrder)
+
+    // Client side pagination
+    const itemsPerPage = this.get('itemsPerPage')
+    const pageSliceStart = itemsPerPage * page
+    return sortedItems.slice(pageSliceStart, pageSliceStart + itemsPerPage + 1)
   },
 
   @readOnly
@@ -66,15 +125,11 @@ export default Controller.extend({
 
   // == Functions =============================================================
 
-  fetch () {
+  fetchPage (page) {
     this.store.query('list-item', {
-      pageSize: 100,
-      start: 0,
-      filter: this.get('filters'),
-      sort: this.get('sortOrder')
+      pageSize: this.get('itemsPerPage'),
+      start: (page * this.get('itemsPerPage'))
     }).then((response) => {
-      // response.get('meta')
-
       this.set('model', this.store.peekAll('list-item'))
     })
   },
@@ -84,21 +139,16 @@ export default Controller.extend({
   // == Actions ===============================================================
 
   actions: {
-    // BEGIN-SNIPPET server-controller
+    // BEGIN-SNIPPET client-typed-controller
     onExpansionChange (expandedItems) {
       this.get('expandedItems').setObjects(expandedItems)
     },
 
     onFilteringChange (filters) {
-      // Re-fetching the model, clear out the existing state
-      this.get('selectedItems').clear()
-      this.get('expandedItems').clear()
       this.set('filters', _.cloneDeep(filters))
-      this.fetch()
-      this.get('notifications').success('Server should return filtered results', {
-        autoClear: true,
-        clearDuration: 2000
-      })
+      this.store.unloadAll('list-item')
+      this.get('selectedItems').clear()
+      this.fetchPage(0)
     },
 
     onGenericAction (selectedItems, message) {
@@ -108,20 +158,23 @@ export default Controller.extend({
       })
     },
 
+    onPaginationChange (page) {
+      this.setProperties({
+        page,
+        scrollTop: 0
+      })
+      this.fetchPage(page)
+    },
+
     onSelectionChange (selectedItems) {
       this.get('selectedItems').setObjects(selectedItems)
     },
 
     onSortingChange (sortOrder) {
-      // Re-fetching the model, clear out the existing state
-      this.get('selectedItems').clear()
-      this.get('expandedItems').clear()
       this.get('sortOrder').setObjects(sortOrder)
-      this.fetch()
-      this.get('notifications').success('Server should return sorted results', {
-        autoClear: true,
-        clearDuration: 2000
-      })
+      this.store.unloadAll('list-item')
+      this.get('selectedItems').clear()
+      this.fetchPage(0)
     }
     // END-SNIPPET
   }

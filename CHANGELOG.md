@@ -1,3 +1,25 @@
+# 17.3.1 (2017-11-14)
+* #139 - Bind context to call of this._super.included() in index.js
+
+# 17.3.0 (2017-10-26)
+* **Updated** the style for filter header section.
+* **Added** new interface `isFilterHiddenOnLoad`. When it sets to true, filter section will be hidden on load.
+* **Added** new interface `onFilterDisplay`. If consumer subscribes to the event, callback will be called when expanding the filter section.
+* **Added** new interface `onFilterHide`. If consumer subscribes to the event, callback will be called when collapsing the filter section.
+* **Added**  `filter.svg` and `filter-arrow` under `frost-object-browser` icon pack.
+
+# 17.2.0 (2017-10-23)
+* **Added** ability for object browser to render list list items with different types
+* **Added** ability for action bar to show certain controls based on list item type
+
+# 17.1.3 (2017-08-11)
+* **Updated** ember-cli 2.12.3 inter-dependencies
+* **Updated** pin `ember-cli-htmlbars-inline-precompile` per issue: https://github.com/ciena-frost/ember-frost-core/issues/488
+* **Updated** dummy app with required `hook` property
+
+# 17.1.2 (2017-07-13)
+* Upgrade to `ember-cli` `2.12.3`
+
 # 17.1.1 (2017-06-06)
 * **Fixed** `config/environment.js` to no longer affect consumer's environment (resolves [#24](https://github.com/ciena-frost/ember-frost-object-browser/issues/124))
 

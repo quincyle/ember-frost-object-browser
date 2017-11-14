@@ -6,7 +6,7 @@
     <div class='frost-modal-demo-title'>
       Demos
     </div>
-    {{#frost-scroll class='frost-modal-demo-selectors'}}
+    {{#frost-scroll class='frost-modal-demo-selectors' hook='demos'}}
       {{#link-to 'overview'}}Overview{{/link-to}}
       {{#link-to 'helpers'}}Helpers{{/link-to}}
       <div class='frost-modal-demo-selector-title'>
@@ -15,13 +15,18 @@
         {{#link-to 'client-code'}}Code{{/link-to}}
       </div>
       <div class='frost-modal-demo-selector-title'>
+        Client side control flow with typed list items
+        {{#link-to 'client-typed'}}Demo{{/link-to}}
+        {{#link-to 'client-typed-code'}}Code{{/link-to}}
+      </div>
+      <div class='frost-modal-demo-selector-title'>
         Server side control flow
         {{#link-to 'server'}}Demo{{/link-to}}
         {{#link-to 'server-code'}}Code{{/link-to}}
       </div>
     {{/frost-scroll}}
   </div>
-  {{#frost-scroll class='frost-modal-demo-example'}}
+  {{#frost-scroll class='frost-modal-demo-example' hook='content'}}
     {{outlet}}
   {{/frost-scroll}}
 </div>

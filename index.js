@@ -1,13 +1,9 @@
-/* globals module */
+/* eslint-env node */
 
 'use strict'
 
 module.exports = {
   name: 'ember-frost-object-browser',
-
-  included: function (app) {
-    this._super.included(app)
-  },
 
   /* eslint-disable complexity */
   init: function (app) {

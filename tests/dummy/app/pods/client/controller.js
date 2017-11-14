@@ -1,7 +1,3 @@
-/**
- * TODO
- */
-
 import Ember from 'ember'
 const {A, Controller, get, inject, isEmpty} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
@@ -140,6 +136,20 @@ export default Controller.extend({
       this.store.unloadAll('list-item')
       this.get('selectedItems').clear()
       this.fetchPage(0)
+    },
+
+    displayFilter () {
+      this.get('notifications').success('Display filter section', {
+        autoClear: true,
+        clearDuration: 2000
+      })
+    },
+
+    hideFilter () {
+      this.get('notifications').success('Hide filter section', {
+        autoClear: true,
+        clearDuration: 2000
+      })
     }
     // END-SNIPPET
   }

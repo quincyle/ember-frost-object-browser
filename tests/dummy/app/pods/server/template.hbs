@@ -1,5 +1,6 @@
 {{! BEGIN-SNIPPET server-template}}
   {{frost-object-browser
+    hook='serverObjectBrowser'
     filters=(component 'frost-bunsen-form'
       autofocus=false
       bunsenModel=filterModel
@@ -8,6 +9,7 @@
       value=filters
     )
     content=(component 'frost-list'
+      hook='serverList'
       item=(component 'list-item')
       itemExpansion=(component 'list-item-expansion')
       items=items
@@ -22,9 +24,11 @@
       )
     )
     controls=(component 'frost-action-bar'
+      hook='serverActionBar'
       selectedItems=selectedItems
       controls=(array
         (component 'frost-button'
+          hook='serverSingleSelectButton'
           disabled=(single-select selectedItems)
           priority='secondary'
           size='medium'
@@ -32,6 +36,7 @@
           onClick=(action 'onGenericAction' selectedItems 'Single-select enabled action')
         )
         (component 'frost-button'
+          hook='serverMultiSelectButton'
           disabled=(multi-select selectedItems)
           priority='secondary'
           size='medium'
@@ -39,6 +44,7 @@
           onClick=(action 'onGenericAction' selectedItems 'Multi-select enabled action')
         )
         (component 'frost-button'
+          hook='serverLabelButton'
           disabled=(not labelIncludesF)
           priority='secondary'
           size='medium'
@@ -46,6 +52,7 @@
           onClick=(action 'onGenericAction' selectedItems 'Custom enabled action')
         )
         (component 'frost-link'
+          hook='serverDetailLink'
           priority='primary'
           routeNames=detailLinkRouteNames
           size='medium'
