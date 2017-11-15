@@ -1,3 +1,15 @@
+# 18.0.0 (2017-11-15)
+This changeset resets ember-frost addons to Ember CLI 2.12.3 versions
+* **Updated** version of `ember-frost-core` 
+* **Updated** version of `ember-frost-fields`
+* **Updated** version of `ember-frost-info-bar`
+* **Updated** version of `ember-frost-list`
+* **Updated** version of `ember-frost-popover`
+* **Updated** version of `ember-frost-sort`
+* **Updated** version of `ember-frost-tabs` 
+* **Updated** version of `ember-prop-types`
+* **Updated** version of `ember-spread`
+
 # 17.3.3 (2017-11-14)
 * **Updated** version of `ember-frost-bunsen`
 * **Removed** `ember-frost-date-picker` as it is now provided via `ember-frost-bunsen` dependencies
