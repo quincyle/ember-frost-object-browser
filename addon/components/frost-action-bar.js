@@ -42,9 +42,10 @@ export default Component.extend({
     ]),
 
     // callbacks
-    getSelectedItemsLabel: PropTypes.func
+    getSelectedItemsLabel: PropTypes.func,
 
     // state
+    isLoading: PropTypes.bool
   },
 
   getDefaultProps () {
@@ -55,11 +56,12 @@ export default Component.extend({
           const items = (count > 1) ? 'Items' : 'Item'
           return `${count} ${items} selected`
         }
-      }
+      },
 
       // callbacks
 
       // state
+      isLoading: false
     }
   },
 
