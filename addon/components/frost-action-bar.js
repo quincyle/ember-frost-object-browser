@@ -40,12 +40,12 @@ export default Component.extend({
       PropTypes.EmberObject,
       PropTypes.object
     ]),
+    isLoading: PropTypes.bool,
 
     // callbacks
-    getSelectedItemsLabel: PropTypes.func,
+    getSelectedItemsLabel: PropTypes.func
 
     // state
-    isLoading: PropTypes.bool
   },
 
   getDefaultProps () {
@@ -57,11 +57,11 @@ export default Component.extend({
           return `${count} ${items} selected`
         }
       },
+      isLoading: false
 
       // callbacks
 
       // state
-      isLoading: false
     }
   },
 
