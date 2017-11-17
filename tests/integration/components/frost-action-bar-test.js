@@ -175,4 +175,32 @@ describe(test.label, function () {
       expect(this.$('.frost-action-bar-buttons .mock-control-2')).to.have.length(0)
     })
   })
+
+  describe('after render with loading options provided', function () {
+    beforeEach(function () {
+      this.setProperties({
+        isLoading: true,
+        loadingText: 'Loading actions'
+      })
+
+      this.render(hbs`
+        {{frost-action-bar
+          controls=(array (component 'mock-controls' class='mock-controls'))
+          hook='frost-action-bar'
+          hookQualifiers=(hash)
+          isLoading=isLoading
+          loadingText=loadingText
+          selectedItems=selectedItems
+        }}
+      `)
+    })
+
+    it('should render with a loading animation', function () {
+      expect(this.$('.frost-action-bar-loading')).to.have.length(1)
+    })
+
+    it('should render with the provided loading text', function () {
+      expect(this.$('.frost-action-bar-loading .loading-text').text()).to.equal('Loading actions')
+    })
+  })
 })
