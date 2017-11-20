@@ -1,3 +1,8 @@
+# 18.1.0 (2017-11-20)
+
+* Added support for displaying a loading animation in the action bar
+
+
 # 18.0.0 (2017-11-15)
 This changeset resets ember-frost addons to Ember CLI 2.12.3 versions
 * **Updated** version of `ember-frost-core` 
