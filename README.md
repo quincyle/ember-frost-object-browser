@@ -26,12 +26,13 @@ ember install ember-frost-object-browser
 
 ### Action Bar
 
-| Attribute        | Type          | Value | Description                                        |
-| ---------------- | ------------- | ----- | -------------------------------------------------- |
-| controls         | `array`       |       | Controls that will be available in the action bar  |
-| isLoading        | `boolean`     |       | Whether or not the action bar is a loading state   |
-| loadingText      | `string`      |       | Text that appears beside the loading animation     |
-| selectedItems    | `array`       |       | List of items that are currently selected          |
+| Attribute        | Type          | Value | Description                                         |
+| ---------------- | ------------- | ----- | --------------------------------------------------- |
+| controls         | `array`       |       | Controls that will be available in the action bar   |
+| isLoading        | `boolean`     | false | **default** - Action bar is not in a loading state  |
+|                  |               | true  | Action bar is in a loading state                    |
+| loadingText      | `string`      |       | Text that appears beside the loading animation      |
+| selectedItems    | `array`       |       | List of items that are currently selected           |
 
 ## Examples
 
@@ -133,7 +134,7 @@ onSortingChange (sortOrder) {…}
   }}
 ```
 
-A scenario where the loading state in the action bar might be useful is if there is some amount of processing that needs to be done in order to determine the state of the controls within the action bar. For example, determining whether a button should be enabled/disabled or shown/hidden.
+A scenario where the loading state in the action bar might be useful is if there is some amount of processing that needs to be done in order to determine the state of the controls within the action bar. For example, determining whether a button should be enabled/disabled or shown/hidden. Note that the loading animation is the ring type from [ember-frost-core](https://github.com/ciena-frost/ember-frost-core).
 
 ## Demo
 
