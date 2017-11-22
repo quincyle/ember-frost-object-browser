@@ -1,5 +1,6 @@
 import {expect} from 'chai'
 import {$hook, initialize as initializeHook} from 'ember-hook'
+import wait from 'ember-test-helpers/wait'
 import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
@@ -228,6 +229,37 @@ describe(test.label, function () {
       $hook('myObjectBrowser-facets-expand-control').click()
 
       expect(displayFilter).to.have.callCount(1)
+    })
+  })
+
+  describe('when user mouse enters/exists the facets area', function () {
+    const myHook = 'myHook'
+    const filterHook = 'filterHook'
+
+    beforeEach(function () {
+      this.set('myHook', myHook)
+      this.set('filterHook', filterHook)
+
+      this.render(hbs`
+        {{frost-object-browser
+          hook=myHook
+          content=(component 'mock-content' class='mock-content')
+          controls=(component 'mock-controls' class='mock-controls')
+          filters=(component 'mock-filters' class='mock-filters' hook=filterHook)
+        }}
+      `)
+
+      return wait().then(() => {
+        $hook(filterHook).css('padding-left', '10px')
+        $hook(filterHook).css('padding-bottom', '1500px')
+
+        return wait()
+      })
+    })
+
+    it('should call the handler displayFilter', function () {
+      $hook(myHook + '-scroll').trigger('mouseenter')
+      expect($hook(myHook + '-scroll').find('.ps-scrollbar-y').height()).to.be.at.least(1)
     })
   })
 })

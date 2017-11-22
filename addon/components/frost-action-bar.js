@@ -40,6 +40,7 @@ export default Component.extend({
       PropTypes.EmberObject,
       PropTypes.object
     ]),
+    isLoading: PropTypes.bool,
 
     // callbacks
     getSelectedItemsLabel: PropTypes.func
@@ -55,7 +56,8 @@ export default Component.extend({
           const items = (count > 1) ? 'Items' : 'Item'
           return `${count} ${items} selected`
         }
-      }
+      },
+      isLoading: false
 
       // callbacks
 

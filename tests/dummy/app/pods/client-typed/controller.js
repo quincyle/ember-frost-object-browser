@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {A, Controller, get, inject, isEmpty} = Ember
+const {A, Controller, get, inject, isEmpty, isPresent, run} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
 import {sort} from 'ember-frost-sort'
@@ -30,7 +30,9 @@ export default Controller.extend({
     {label: 'Id', model: 'id'},
     {label: 'Label', model: 'label'}
   ]),
+  isLoading: false,
   itemsPerPage: 10,
+  loadingText: 'Loading actions',
   page: 0,
   scrollTop: 0,
   selectedItems: [],
@@ -134,6 +136,10 @@ export default Controller.extend({
     })
   },
 
+  doneLoading () {
+    this.set('isLoading', false)
+  },
+
   // == Ember Lifecycle Hooks =================================================
 
   // == Actions ===============================================================
@@ -168,6 +174,14 @@ export default Controller.extend({
 
     onSelectionChange (selectedItems) {
       this.get('selectedItems').setObjects(selectedItems)
+      if (isPresent(selectedItems)) {
+        this.set('isLoading', true)
+        this.get('notifications').success('Set isLoading flag to true', {
+          autoClear: true,
+          clearDuration: 2000
+        })
+        run.debounce(this, this.doneLoading, 2000)
+      }
     },
 
     onSortingChange (sortOrder) {
