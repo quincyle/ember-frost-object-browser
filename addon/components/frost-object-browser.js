@@ -67,6 +67,10 @@ export default Component.extend({
       if (callback) {
         callback()
       }
+    },
+
+    onMouseEnterHandler (element) {
+      window.Ps.update(element)
     }
   }
 })
