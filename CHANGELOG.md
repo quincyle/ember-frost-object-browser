@@ -1,3 +1,8 @@
+# 18.2.0 (2017-11-22)
+
+* Added support for displaying a loading animation in the action bar
+
+
 # 18.1.0 (2017-11-20)
 
 * Added support for displaying a loading animation in the action bar
