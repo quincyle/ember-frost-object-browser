@@ -16,6 +16,7 @@ Router.map(function () {
   this.route('client-typed-code')
   this.route('server')
   this.route('server-code')
+  this.route('user', {path: '/user/:user_id'})
 })
 
 export default Router

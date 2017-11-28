@@ -31,8 +31,6 @@
   )
   controls=(component 'frost-action-bar'
     hook='clientActionBar'
-    isLoading=true
-    loadingText='Loading actions'
     selectedItems=selectedItems
     controls=(array
       (component 'frost-button'
@@ -62,7 +60,7 @@
       (component 'frost-link'
         hook='clientDetailLink'
         priority='primary'
-        routeNames=detailLinkRouteNames
+        routes=detailLinkRoutes
         size='medium'
         text='Detail'
       )
