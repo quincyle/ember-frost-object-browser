@@ -39,9 +39,12 @@ export default Controller.extend({
 
   @readOnly
   @computed('selectedItems.@each.id')
-  detailLinkRouteNames (selectedItems) {
+  detailLinkRoutes (selectedItems) {
     return selectedItems.map((selectedItem) => {
-      return `${window.location.origin}/#/user/${selectedItem.get('id')}`
+      return {
+        name: 'user',
+        models: [selectedItem.get('id')]
+      }
     })
   },
 

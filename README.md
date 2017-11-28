@@ -93,7 +93,7 @@ ember install ember-frost-object-browser
       )
       (component 'frost-link'
         priority='primary'
-        routeNames=detailLinkRouteNames
+        routes=detailLinkRoutes
         size='medium'
         text='Detail'
       )
@@ -123,7 +123,7 @@ onSortingChange (sortOrder) {…}
     controls=array(
       (component 'frost-link'
         priority='primary'
-        routeNames=detailLinkRouteNames
+        routes=detailLinkRoutes
         size='medium'
         text='Detail'
       )
