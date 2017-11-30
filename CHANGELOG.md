@@ -1,3 +1,6 @@
+# 18.2.3 (2017-11-30)
+* **Fixed** bug that action bar is rendered outside viewport when selecting an item in Firefox.
+
 # 18.2.2 (2017-11-29)
 * **Removed** unneeded `ember-symbol-observable` and `symbol-observable` that were brought in via `ember-frost-bunsen` via the blueprints of `ember-redux-shim`
 
