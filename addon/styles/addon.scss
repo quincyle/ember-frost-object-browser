@@ -22,6 +22,7 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 0;
   }
 
   .frost-list-content-container {
