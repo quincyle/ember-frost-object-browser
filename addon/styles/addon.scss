@@ -94,6 +94,12 @@ $frost-object-browser-actions-box-shadow: 0 8px 8px -8px #696868, 0 -8px 8px -8p
       background-color: $frost-color-lgrey-1;
     }
 
+    .frost-bunsen-heading {
+      .frost-button {
+        margin-right: 2px;
+      }
+    }
+
     .frost-bunsen-input-text {
       &.frost-field {
         div {
