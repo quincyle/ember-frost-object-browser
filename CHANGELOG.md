@@ -1,3 +1,6 @@
+# 18.2.4 (2017-12-05)
+* Fixes #157, drop shadow on the `clear` buttons in filter facets was being cutoff, gave it 2px of margin to show
+
 # 18.2.3 (2017-11-30)
 * **Fixed** bug that action bar is rendered outside viewport when selecting an item in Firefox.
 
