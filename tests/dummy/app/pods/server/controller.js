@@ -2,7 +2,6 @@ import Ember from 'ember'
 const {A, Controller, inject, isEmpty} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
-import _ from 'lodash'
 
 export default Controller.extend({
 
@@ -96,7 +95,7 @@ export default Controller.extend({
       // Re-fetching the model, clear out the existing state
       this.get('selectedItems').clear()
       this.get('expandedItems').clear()
-      this.set('filters', _.cloneDeep(filters))
+      this.set('filters', Object.assign({}, filters))
       this.fetch()
       this.get('notifications').success('Server should return filtered results', {
         autoClear: true,

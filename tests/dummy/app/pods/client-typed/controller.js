@@ -3,7 +3,6 @@ const {A, Controller, get, inject, isEmpty, isPresent, run} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
 import {sort} from 'ember-frost-sort'
-import _ from 'lodash'
 
 export default Controller.extend({
 
@@ -154,7 +153,7 @@ export default Controller.extend({
     },
 
     onFilteringChange (filters) {
-      this.set('filters', _.cloneDeep(filters))
+      this.set('filters', Object.assign({}, filters))
       this.store.unloadAll('list-item')
       this.get('selectedItems').clear()
       this.fetchPage(0)
