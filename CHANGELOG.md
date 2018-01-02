@@ -1,3 +1,6 @@
+# 18.2.5 (2018-01-02)
+* Closes #159 - Refactor for removal of usage of lodash
+
 # 18.2.4 (2017-12-05)
 * Fixes #157, drop shadow on the `clear` buttons in filter facets was being cutoff, gave it 2px of margin to show
 
