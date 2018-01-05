@@ -144,7 +144,7 @@ export default Component.extend({
       // reverse to grab buttons from the end
       moreActionButtons = controls.reverse()
         .filter(control => control.name === 'frost-button' && ++buttonCount > MAX_CONTROLS)
-      controls.reverse()
+      moreActionButtons.reverse()
     }
 
     // convert buttons to POJOs if needed

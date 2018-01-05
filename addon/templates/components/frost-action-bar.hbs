@@ -11,7 +11,7 @@
     <div class='loading-text'>{{loadingText}}</div>
   {{/if}}
 </div>
-<div class='{{css}}-buttons'>
+<div class='{{css}}-buttons' data-test={{hook 'frost-action-bar-buttons'}}>
   {{#if _moreActionButtons.length}}
     {{#frost-button
       hook='moreActions'
