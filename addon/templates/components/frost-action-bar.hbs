@@ -12,6 +12,43 @@
   {{/if}}
 </div>
 <div class='{{css}}-buttons'>
+  {{#if _moreActionButtons.length}}
+    {{#frost-button
+      hook='moreActions'
+      priority='secondary'
+      size='medium'
+      text=moreActionButtonsText
+    }}
+      {{#frost-popover
+        classNames='more-buttons-popover'
+        closest=true
+        position='top'
+        target='.frost-button'
+      }}
+        <ul>
+          {{#each _moreActionButtons as |action|}}
+            {{#if action.disabled}}
+              <li
+                class='disabled'
+                data-test={{hook action.hook}}
+                role='button'
+              >
+                {{action.text}}
+              </li>
+            {{else}}
+              <li
+                data-test={{hook action.hook}}
+                onClick={{action.onClick}}
+                role='button'
+              >
+                {{action.text}}
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
+      {{/frost-popover}}
+    {{/frost-button}}
+  {{/if}}
   {{#each _controls as |control|}}
     {{component control}}
   {{/each}}

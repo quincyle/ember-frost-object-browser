@@ -26,13 +26,16 @@ ember install ember-frost-object-browser
 
 ### Action Bar
 
-| Attribute        | Type          | Value | Description                                         |
-| ---------------- | ------------- | ----- | --------------------------------------------------- |
-| controls         | `array`       |       | Controls that will be available in the action bar   |
-| isLoading        | `boolean`     | false | **default** - Action bar is not in a loading state  |
-|                  |               | true  | Action bar is in a loading state                    |
-| loadingText      | `string`      |       | Text that appears beside the loading animation      |
-| selectedItems    | `array`       |       | List of items that are currently selected           |
+| Attribute             | Type          | Value | Description                                                 |
+| --------------------- | ------------- | ----- | ----------------------------------------------------------- |
+| controls              | `array`       |       | Controls that will be available in the action bar           |
+| isLoading             | `boolean`     | false | **default** - Action bar is not in a loading state          |
+|                       |               | true  | Action bar is in a loading state                            |
+| isVisible             | `boolean`     |       | defaults to computed prop based on selectedItems emptiness  |
+| loadingText           | `string`      |       | Text that appears beside the loading animation              |
+| moreActionButtons     | `array`       |       | Controls that will be wrapped up into 'More...' button      |
+| moreActionButtonsText | `string`      |       | Text for 'More...' button                                   |
+| selectedItems         | `array`       |       | List of items that are currently selected                   |
 
 ## Examples
 
@@ -120,12 +123,24 @@ onSortingChange (sortOrder) {…}
 
 ```handlebars
   {{frost-action-bar
-    controls=array(
+    controls=(array
       (component 'frost-link'
         priority='primary'
         routes=detailLinkRoutes
         size='medium'
         text='Detail'
+      )
+    )
+    moreActionButtons=(array
+      (component 'frost-button'
+        text='Extra button one'
+        hook='extraButtonOne'
+        onClick=(action 'doTheFirstExtraThing')
+      )
+      (component 'frost-button'
+        text='Extra button two'
+        hook='extraButtonTwo'
+        onClick=(action 'doTheSecondExtraThing')
       )
     )
     isLoading=isLoading
@@ -135,6 +150,10 @@ onSortingChange (sortOrder) {…}
 ```
 
 A scenario where the loading state in the action bar might be useful is if there is some amount of processing that needs to be done in order to determine the state of the controls within the action bar. For example, determining whether a button should be enabled/disabled or shown/hidden. Note that the loading animation is the ring type from [ember-frost-core](https://github.com/ciena-frost/ember-frost-core).
+
+#### More... Button
+
+By default, if the action bar has more than 4 items, it will take any `frost-button`s and wrap them up into a `More...` button with a popover list of all the extra possible actions. This can be overridden by setting `moreActionButtons=false` or by manually setting the action buttons you want wrapped up as in the template above. The `moreActionButtons` property only accepts `frost-buttons`.
 
 ## Demo
 

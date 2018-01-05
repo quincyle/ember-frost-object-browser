@@ -2,6 +2,15 @@ $frost-action-bar-box-shadow-color: rgba(0, 0, 0, 0.2);
 $frost-action-bar-background-color: rgba($frost-color-white, 0.85);
 $frost-action-bar-loading-dimension: 35px;
 $frost-action-bar-loading-text-margin: calc(#{$frost-action-bar-loading-dimension} - #{$frost-font-s});
+$frost-input-select-option-row-height: 35px;
+
+@mixin triangle-up($color, $size) {
+  width: 25px;
+  height: 0;
+  border-right: $size solid transparent;
+  border-bottom: $size solid $color;
+  border-left: $size solid transparent;
+}
 
 .frost-action-bar {
   display: flex;
@@ -45,5 +54,61 @@ $frost-action-bar-loading-text-margin: calc(#{$frost-action-bar-loading-dimensio
 
   &-buttons > * {
     margin-left: 15px;
+  }
+
+  .more-buttons-popover {
+    z-index: 10;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        width: 100%;
+        height: $frost-input-select-option-row-height;
+        padding: 0 5px;
+        border-bottom: solid 1px $frost-color-lgrey-3;
+        color: $frost-color-blue-1;
+        line-height: $frost-input-select-option-row-height;
+        list-style: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &.disabled {
+          opacity: .25;
+          // In Firefox, the click on the app bar was not detected - added this to enable it.
+          // From https://developer.mozilla.org/en/docs/Web/CSS/pointer-events
+          //     The CSS property pointer-events allows authors to control under what circumstances (if any)
+          //     a particular graphic element can become the target of mouse events.
+          //     none: The element is never the target of mouse events; however, mouse events may target
+          //            its descendant elements if those descendants have pointer-events set to some other value.
+          //            In these circumstances, mouse events will trigger event listeners on this parent element
+          //            as appropriate on their way to/from the descendant during the event capture/bubble phases.
+          pointer-events: none;
+        }
+
+        &:hover {
+          background: transparentize($frost-selection, .92);
+        }
+      }
+    }
+
+    .tooltip-frost-popover {
+      .frost-button {
+        margin-left: 0;
+      }
+    }
+
+    .up-arrow {
+      @include triangle-up($frost-select-container-background, 12px);
+      display: inline-block;
+      position: absolute;
+      top: -10px;
+      right: 23px;
+      overflow: visible;
+      z-index: 3;
+      pointer-events: none;
+    }
   }
 }
