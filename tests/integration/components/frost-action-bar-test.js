@@ -357,4 +357,24 @@ describe(test.label, function () {
       })
     })
   })
+
+  describe('forceVisible', function () {
+    beforeEach(function () {
+      this.render(hbs`
+        {{frost-action-bar
+          controls=(array
+            (component 'frost-button' class="test-button" text='button 1')
+          )
+          forceVisible=true
+          hook='bar'
+          hookQualifiers=(hash)
+          selectedItems=selectedItems
+        }}
+      `)
+    })
+
+    it('should be visible when selectedItems is empty', function () {
+      expect(this.$('.frost-action-bar')).not.to.have.css('display', 'none')
+    })
+  })
 })
