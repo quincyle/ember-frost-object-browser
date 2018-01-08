@@ -131,7 +131,7 @@ onSortingChange (sortOrder) {…}
         text='Detail'
       )
     )
-    moreActionButtons=(array
+    moreActions=(array
       (component 'frost-button'
         text='Extra button one'
         hook='extraButtonOne'
@@ -153,7 +153,7 @@ A scenario where the loading state in the action bar might be useful is if there
 
 #### More... Button
 
-By default, if the action bar has more than 4 items, it will take any `frost-button`s and wrap them up into a `More...` button with a popover list of all the extra possible actions. This can be overridden by setting `moreActionButtons=false` or by manually setting the action buttons you want wrapped up as in the template above. The `moreActionButtons` property only accepts `frost-buttons`.
+By default, if the action bar has more than 4 items, it will take any `frost-button`s and wrap them up into a `More...` button with a popover list of all the extra possible actions. This can be overridden by setting `moreActions=false` or by manually setting the action buttons you want wrapped up as in the template above. The `moreActions` property only accepts `frost-buttons`.
 
 ## Demo
 
