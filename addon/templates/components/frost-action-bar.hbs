@@ -12,21 +12,21 @@
   {{/if}}
 </div>
 <div class='{{css}}-buttons' data-test={{hook 'frost-action-bar-buttons'}}>
-  {{#if _moreActionButtons.length}}
+  {{#if _moreActions.length}}
     {{#frost-button
       hook='moreActions'
       priority='secondary'
       size='medium'
-      text=moreActionButtonsText
+      text=moreActionsText
     }}
       {{#frost-popover
-        classNames='more-buttons-popover'
+        classNames='more-actions-popover'
         closest=true
         position='top'
         target='.frost-button'
       }}
         <ul>
-          {{#each _moreActionButtons as |action|}}
+          {{#each _moreActions as |action|}}
             {{#if action.disabled}}
               <li
                 class='disabled'

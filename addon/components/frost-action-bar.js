@@ -32,12 +32,13 @@ export default Component.extend({
     i18n: PropTypes.shape({
       formatSelectedItemsLabel: PropTypes.func.isRequired
     }),
-    moreActionButtons: PropTypes.oneOfType([
+    moreActions: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.EmberComponent),
       PropTypes.arrayOf(PropTypes.object),
       PropTypes.bool,
       PropTypes.object
     ]),
-    moreActionButtonsText: PropTypes.string,
+    moreActionsText: PropTypes.string,
     selectedItems: PropTypes.arrayOf(PropTypes.oneOfType([
       PropTypes.EmberObject,
       PropTypes.object
@@ -48,7 +49,7 @@ export default Component.extend({
       PropTypes.object
     ]),
     isLoading: PropTypes.bool,
-    isVisible: PropTypes.bool,
+    forceVisible: PropTypes.bool,
 
     // callbacks
     getSelectedItemsLabel: PropTypes.func
@@ -59,6 +60,7 @@ export default Component.extend({
   getDefaultProps () {
     return {
       // options
+      forceVisible: false,
       i18n: {
         formatSelectedItemsLabel (count) {
           const items = (count > 1) ? 'Items' : 'Item'
@@ -67,16 +69,8 @@ export default Component.extend({
       },
       isLoading: false,
 
-      @readOnly
-      @computed('selectedItems.[]')
-      // computed prop defined here so we have the option of forcing visibility state
-      // or computing it based on something else
-      isVisible (selectedItems) {
-        return !isEmpty(selectedItems)
-      },
-
-      moreActionButtons: true,
-      moreActionButtonsText: 'More...'
+      moreActions: true,
+      moreActionsText: 'More...'
 
       // callbacks
 
@@ -88,25 +82,31 @@ export default Component.extend({
 
   @readOnly
   @computed('selectedItems.[]')
+  isVisible (selectedItems) {
+    return this.get('forceVisible') || !isEmpty(selectedItems)
+  },
+
+  @readOnly
+  @computed('selectedItems.[]')
   selectedItemsLabel (selectedItems) {
     return this.i18n.formatSelectedItemsLabel(selectedItems.length)
   },
 
   @readOnly
-  @computed('controls', 'selectedItems.[]', 'moreActionButtons')
+  @computed('controls', 'selectedItems.[]', 'moreActions')
   /**
    * gets controls for the action bar
-   * @param {array|object} controls - array or hash of controls
-   * @param {array} selectedItems - array of selected items for filtering controls
-   * @param {boolean|object|array} moreActionButtons - array or hash of extra controls
-   *  or flag indicating whether to generate them automaticaly
-   * @returns {array} array of controls
+   * @param {Ember.Component[]|object} controls - array or hash of controls
+   * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering controls
+   * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of extra controls
+   *  or flag indicating whether to generate them automatically
+   * @returns {Ember.Component[]} array of controls
    */
-  _controls (controls, selectedItems, moreActionButtons) {
+  _controls (controls, selectedItems, moreActions) {
     controls = this.getNormalizedControls(controls, selectedItems)
 
     // slice off extra buttons if needed (default)
-    if (moreActionButtons === true) {
+    if (moreActions === true) {
       let buttonCount = controls.filter(control => control.name !== 'frost-button').length
 
       // reverse to take buttons off the end
@@ -119,44 +119,44 @@ export default Component.extend({
   },
 
   @readOnly
-  @computed('controls', 'selectedItems.[]', 'moreActionButtons')
+  @computed('controls', 'selectedItems.[]', 'moreActions')
   /**
-   * gets array of argument sets for building moreActionButtons button
-   * @param {array|object} controls - array or hash of controls
-   * @param {array} selectedItems - array of selected items for filtering controls
-   * @param {boolean|object|array} moreActionButtons - array or hash of extra controls
-   *  or flag indicating whether to generate them automaticaly
-   * @returns {array} array for building moreActionButtons button
+   * gets controls for the action bar
+   * @param {Ember.Component[]|object} controls - array or hash of moreActions
+   * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering moreActions
+   * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of extra moreActions
+   *  or flag indicating whether to generate them automatically
+   * @returns {object[]} array of moreActions definitions
    */
-  _moreActionButtons (controls, selectedItems, moreActionButtons) {
+  _moreActions (controls, selectedItems, moreActions) {
     controls = this.getNormalizedControls(controls, selectedItems)
-    moreActionButtons = this.getNormalizedControls(moreActionButtons, selectedItems)
+    moreActions = this.getNormalizedControls(moreActions, selectedItems)
 
     // fail fast if we're told not use this feature
-    if (moreActionButtons === false) {
+    if (moreActions === false) {
       return []
     }
 
     // get the extra buttons if needed (default)
-    if (moreActionButtons === true) {
+    if (moreActions === true) {
       let buttonCount = controls.filter(control => control.name !== 'frost-button').length
 
       // reverse to grab buttons from the end
-      moreActionButtons = controls.reverse()
+      moreActions = controls.reverse()
         .filter(control => control.name === 'frost-button' && ++buttonCount > MAX_CONTROLS)
-      moreActionButtons.reverse()
+      moreActions.reverse()
     }
 
     // convert buttons to POJOs if needed
-    return moreActionButtons.map(button => button.name === 'frost-button' ? this.convertButton(button) : button)
+    return moreActions.map(button => button.name === 'frost-button' ? this.convertButton(button) : button)
   },
 
   // == Functions =============================================================
 
   /**
-   * converts a button to a hash of arguments to be used for building the moreActionButtons button
+   * converts a button to a hash of arguments to be used for building the moreActions button
    * @param {FrostButton} button - a frost-button to convert
-   * @returns {object} - plain object of props for moreActionButtons button
+   * @returns {object} - plain object of props for moreActions button
    */
   convertButton (button) {
     const propNames = ['disabled', 'hook', 'onClick', 'text']
@@ -185,13 +185,12 @@ export default Component.extend({
   /**
    * converts controls to array if they are given as a hash
    * filters out inapplicable controls
-   * @param {object|array} controls - array or hash of controls
-   * @param {array} selectedItems - array of selected items for filtering
-   * @returns {array} - array of controls
+   * @param {Ember.Component[]|boolean|object[]|object} controls - array or hash of controls
+   * @param {Ember.Object[]|object[]} selectedItems - array of selected items
+   * @returns {Ember.Component[]|boolean|object[]} - array of controls or flag
    */
   getNormalizedControls (controls, selectedItems) {
     // convert hash of controls to array if necessary
-    // notice this is Ember typeOf, which is very differnt from native typeof
     if (typeOf(controls) === 'object') {
       // filter out inapplicable controls
       controls = applicableControls(this.selectedTypesWithControls(selectedItems)).map((controlName) => {
@@ -208,8 +207,8 @@ export default Component.extend({
 
   /**
    * filters out inapplicable controls
-   * @param {array} selectedItems - currently selected items
-   * @returns {array} - array of applicable controls
+   * @param {Ember.Object[]|object[]} selectedItems - array of selected items
+   * @returns {Ember.Object[]|object[]} - array of applicable controls
    */
   selectedTypesWithControls (selectedItems) {
     const componentKeyNamesForTypes = this.get('componentKeyNamesForTypes')

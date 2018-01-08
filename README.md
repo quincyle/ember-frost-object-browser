@@ -26,16 +26,16 @@ ember install ember-frost-object-browser
 
 ### Action Bar
 
-| Attribute             | Type          | Value | Description                                                 |
-| --------------------- | ------------- | ----- | ----------------------------------------------------------- |
-| controls              | `array`       |       | Controls that will be available in the action bar           |
-| isLoading             | `boolean`     | false | **default** - Action bar is not in a loading state          |
-|                       |               | true  | Action bar is in a loading state                            |
-| isVisible             | `boolean`     |       | defaults to computed prop based on selectedItems emptiness  |
-| loadingText           | `string`      |       | Text that appears beside the loading animation              |
-| moreActionButtons     | `array`       |       | Controls that will be wrapped up into 'More...' button      |
-| moreActionButtonsText | `string`      |       | Text for 'More...' button                                   |
-| selectedItems         | `array`       |       | List of items that are currently selected                   |
+| Attribute       | Type                                        | Value | Description                                         |
+| --------------- | ----------------------------------          | ----- | --------------------------------------------------- |
+| controls        | `array`                                     |       | Controls that will be available in the action bar   |
+| isLoading       | `boolean`                                   | false | **default** - Action bar is not in a loading state  |
+|                 |                                             | true  | Action bar is in a loading state                    |
+| forceVisible    | `boolean`                                   |       | forces the component's visibility                   |
+| loadingText     | `string`                                    |       | Text that appears beside the loading animation      |
+| moreActions     | `Ember.Component[]|boolean|object[]|object` |       | Only accepts `frost-button`s if passing components  |
+| moreActiosnText | `string`                                    |       | Text for 'More...' button                           |
+| selectedItems   | `array`                                     |       | List of items that are currently selected           |
 
 ## Examples
 

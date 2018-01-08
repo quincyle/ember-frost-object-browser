@@ -208,7 +208,7 @@ describe(test.label, function () {
     })
   })
 
-  describe('moreActionButtons', function () {
+  describe('moreActions', function () {
     describe('default', function () {
       let buttonAction
 
@@ -237,7 +237,7 @@ describe(test.label, function () {
         expect(this.$('.control').length).to.equal(4)
       })
 
-      it('should generate a moreActionButtons button', function () {
+      it('should generate a moreActions button', function () {
         expect($hook('moreActions').length).to.equal(1)
       })
 
@@ -262,7 +262,7 @@ describe(test.label, function () {
       beforeEach(function () {
         this.render(hbs`
           {{frost-action-bar
-            moreActionButtons=false
+            moreActions=false
             controls=(array
               (component 'frost-button' class="test-button" text='button 1')
               (component 'frost-button' class="test-button" text='button 2')
@@ -297,7 +297,7 @@ describe(test.label, function () {
               (component 'frost-button' class="test-button" text='button 4')
               (component 'frost-button' class="test-button" text='button 5')
             )
-            moreActionButtons=(array
+            moreActions=(array
               (component 'frost-button' class="test-button" text='button 6')
               (component 'frost-button' class="test-button" text='button 7')
               (component 'frost-button' class="test-button" text='button 8')
@@ -310,13 +310,13 @@ describe(test.label, function () {
         `)
       })
 
-      it('should put moreActionButtons into moreActionButtons button', function () {
+      it('should put moreActions into moreActions button', function () {
         const $moreButton = $hook('moreActions')
         expect($moreButton.find('li').length).to.equal(4)
       })
 
-      it('should not put any controls into the moreActionButtons', function () {
-        // 6 becuase 5 buttons plus 1 more button
+      it('should not put any controls into the moreActions', function () {
+        // 6 because 5 buttons plus 1 more button
         expect($hook('frost-action-bar-buttons').find('dummy').length).to.equal(6)
       })
     })
@@ -327,7 +327,7 @@ describe(test.label, function () {
       beforeEach(function () {
         buttonAction = sinon.spy()
 
-        this.set('moreActionButtons', [
+        this.set('moreActions', [
           {text: 'button 2', hook: 'button2', onClick: buttonAction},
           {text: 'button 3', hook: 'button3'},
           {text: 'button 4', hook: 'button4'}
@@ -335,11 +335,11 @@ describe(test.label, function () {
 
         this.render(hbs`
           {{frost-action-bar
-            moreActionButtons=false
+            moreActions=false
             controls=(array
               (component 'frost-button' class="test-button" text='button 1')
             )
-            moreActionButtons=moreActionButtons
+            moreActions=moreActions
             hook='bar'
             hookQualifiers=(hash)
             selectedItems=selectedItems
@@ -347,7 +347,7 @@ describe(test.label, function () {
         `)
       })
 
-      it('should put moreActionButtons in the "More..." button', function () {
+      it('should put moreActions in the "More..." button', function () {
         expect($hook('moreActions').find('li').length).to.equal(3)
       })
 
