@@ -145,7 +145,6 @@ export default Component.extend({
       moreActions = controls.reverse()
         .filter(control => this.isFrostButton(control) && ++buttonCount > MAX_CONTROLS)
       moreActions.reverse()
-
     }
 
     // convert buttons to POJOs if needed
@@ -199,7 +198,7 @@ export default Component.extend({
         let val = hash[key]
 
         // compute if necessary
-        if (typeof(val) === 'object' && val._compute && typeof(val._compute) === 'function') {
+        if (typeof val === 'object' && val._compute && typeof val._compute === 'function') {
           val = val._compute()
         }
 
@@ -240,7 +239,7 @@ export default Component.extend({
    * @param {Ember.Component|object} component - component to check
    * @returns {boolean} - whether component is a frost-button
    */
-  isFrostButton(component) {
+  isFrostButton (component) {
     return Object.values(component).includes('frost-button')
   },
 
