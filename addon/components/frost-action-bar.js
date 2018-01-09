@@ -176,7 +176,8 @@ export default Component.extend({
 
           // else grab value from component
           } else {
-            props[key] = get(button, `args.named._map.${key}.inner`)
+            // props[key] = get(button, `args.named._map.${key}.inner`)
+            props[key] = button.args.named._map[key].inner
           }
         }
 
