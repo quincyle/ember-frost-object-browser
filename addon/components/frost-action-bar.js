@@ -107,11 +107,11 @@ export default Component.extend({
 
     // slice off extra buttons if needed (default)
     if (moreActions === true) {
-      let buttonCount = controls.filter(control => control.name !== 'frost-button').length
+      let buttonCount = controls.filter(control => !this.isFrostButton(control)).length
 
       // reverse to take buttons off the end
       controls = controls.reverse()
-        .filter(control => control.name !== 'frost-button' || ++buttonCount <= MAX_CONTROLS)
+        .filter(control => !this.isFrostButton(control) || ++buttonCount <= MAX_CONTROLS)
       controls.reverse()
     }
 
@@ -139,16 +139,17 @@ export default Component.extend({
 
     // get the extra buttons if needed (default)
     if (moreActions === true) {
-      let buttonCount = controls.filter(control => control.name !== 'frost-button').length
+      let buttonCount = controls.filter(control => !this.isFrostButton(control)).length
 
       // reverse to grab buttons from the end
       moreActions = controls.reverse()
-        .filter(control => control.name === 'frost-button' && ++buttonCount > MAX_CONTROLS)
+        .filter(control => this.isFrostButton(control) && ++buttonCount > MAX_CONTROLS)
       moreActions.reverse()
+
     }
 
     // convert buttons to POJOs if needed
-    return moreActions.map(button => button.name === 'frost-button' ? this.convertButton(button) : button)
+    return moreActions.map(button => this.isFrostButton(button) ? this.convertButton(button) : button)
   },
 
   // == Functions =============================================================
@@ -161,25 +162,54 @@ export default Component.extend({
   convertButton (button) {
     const propNames = ['disabled', 'hook', 'onClick', 'text']
 
-    return button.args.named.keys.reduce((props, key) => {
-      // only get specified prop names
-      if (propNames.includes(key)) {
-        // compute the disabled property if exists and is needed
-        if (key === 'disabled') {
-          let disabled = get(button, 'args.named._map.disabled')
-          let compute = get(disabled, 'compute')
+    // ember 2.12+
+    if (button.args) {
+      return button.args.named.keys.reduce((props, key) => {
+        // only get specified prop names
+        if (propNames.includes(key)) {
+          // compute the disabled property if exists and is needed
+          if (key === 'disabled') {
+            let disabled = get(button, 'args.named._map.disabled')
+            let compute = get(disabled, 'compute')
 
-          // need disabled.compute vs just compute for context
-          props[key] = typeof compute === 'function' ? disabled.compute() : disabled
+            // need disabled.compute vs just compute for context
+            props[key] = typeof compute === 'function' ? disabled.compute() : disabled
 
-        // else grab value from component
-        } else {
-          props[key] = get(button, `args.named._map.${key}.inner`)
+          // else grab value from component
+          } else {
+            props[key] = get(button, `args.named._map.${key}.inner`)
+          }
         }
+
+        return props
+      }, {})
+    // ember 2.8
+    } else {
+      let hashKey = Object.keys(button).filter(key => /hash/i.test(key))
+
+      if (hashKey.length) {
+        hashKey = hashKey[0]
+      } else {
+        return button
       }
 
-      return props
-    }, {})
+      const hash = button[hashKey]
+
+      return propNames.reduce((props, key) => {
+        let val = hash[key]
+
+        // compute if necessary
+        if (typeof(val) === 'object' && val._compute && typeof(val._compute) === 'function') {
+          val = val._compute()
+        }
+
+        // set val
+        props[key] = val
+
+        // return the props
+        return props
+      }, {})
+    }
   },
 
   /**
@@ -203,6 +233,15 @@ export default Component.extend({
     }
 
     return controls
+  },
+
+  /**
+   * checks whether a given component is a frost-buttons
+   * @param {Ember.Component|object} component - component to check
+   * @returns {boolean} - whether component is a frost-button
+   */
+  isFrostButton(component) {
+    return Object.values(component).includes('frost-button')
   },
 
   /**
