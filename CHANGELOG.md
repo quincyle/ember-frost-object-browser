@@ -1,3 +1,12 @@
+# 19.0.0 (2018-01-10)
+
+* Added "More..." button
+  * Added default behavior that collapses extra buttons when more than 4
+  * Added ability to override default
+  * Added docs for "More..." button
+  * Added ability to change text of "More..." button
+* Added `alwaysVisible` flag to `frost-action-bar`
+
 # 18.2.5 (2018-01-02)
 * Closes #159 - Refactor for removal of usage of lodash
 
