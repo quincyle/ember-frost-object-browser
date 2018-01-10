@@ -105,11 +105,11 @@ export default Component.extend({
   _controls (controls, selectedItems, moreActions) {
     controls = this.getNormalizedControls(controls, selectedItems)
 
-    // slice off extra buttons if needed (default)
+    // slice off extra controls if needed (default)
     if (moreActions === true) {
       let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
-      // reverse to take buttons off the end
+      // reverse to take controls off the end
       controls = controls.reverse()
         .filter(control => !this.hasOnClick(control) || ++clickableCount <= MAX_CONTROLS)
       controls.reverse()
@@ -137,65 +137,38 @@ export default Component.extend({
       return []
     }
 
-    // get the extra buttons if needed (default)
+    // get the extra controls if needed (default)
     if (moreActions === true) {
       let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
-      // reverse to grab buttons from the end
+      // reverse to grab controls from the end
       moreActions = controls.reverse()
         .filter(control => this.hasOnClick(control) && ++clickableCount > MAX_CONTROLS)
       moreActions.reverse()
     }
 
-    // convert buttons to POJOs if needed
-    return moreActions.map(button => this.hasOnClick(button) ? this.convertControl(button) : button)
+    // convert controls to POJOs if needed
+    return moreActions.map(control => this.convertControl(control))
   },
 
   // == Functions =============================================================
 
   /**
-   * converts a button to a hash of arguments to be used for building the moreActions button
-   * @param {FrostButton} button - a frost-button to convert
+   * converts a control to a hash of arguments to be used for building the moreActions button
+   * @param {Ember.Component|object} control - a control to convert
    * @returns {object} - plain object of props for moreActions button
    */
-  convertControl (button) {
+  convertControl (control) {
     const propNames = ['disabled', 'hook', 'onClick', 'text']
-
-    // ember 2.12+
-    if (button.args) {
-      return button.args.named.keys.reduce((props, key) => {
-        // only get specified prop names
-        if (propNames.includes(key)) {
-          // compute the disabled property if exists and is needed
-          if (key === 'disabled') {
-            let disabled = get(button, 'args.named._map.disabled')
-            let compute = get(disabled, 'compute')
-
-            // need disabled.compute vs just compute for context
-            props[key] = typeof compute === 'function' ? disabled.compute() : disabled
-
-          // else grab value from component
-          } else {
-            props[key] = get(button, `args.named._map.${key}.inner`)
-          }
-        }
-
-        return props
-      }, {})
+    let hashKey = Object.keys(control).filter(key => /component_hash/i.test(key))
 
     // ember 2.8
-    // TODO remove when we stop support Ember 2.8
+    // TODO remove when we stop supporting Ember 2.8
     // Ember 2.8 handled the internals of the passed component definition differently
-    } else {
-      let hashKey = Object.keys(button).filter(key => /hash/i.test(key))
+    if (hashKey.length) {
+      hashKey = hashKey[0]
 
-      if (hashKey.length) {
-        hashKey = hashKey[0]
-      } else {
-        return button
-      }
-
-      const hash = button[hashKey]
+      const hash = control[hashKey]
 
       return propNames.reduce((props, key) => {
         let val = hash[key]
@@ -211,6 +184,32 @@ export default Component.extend({
         // return the props
         return props
       }, {})
+
+    // ember 2.12+
+    } else if (get(control, 'args.named.keys')) {
+      return control.args.named.keys.reduce((props, key) => {
+        // only get specified prop names
+        if (propNames.includes(key)) {
+          // compute the disabled property if exists and is needed
+          if (key === 'disabled') {
+            let disabled = get(control, 'args.named._map.disabled')
+            let compute = get(disabled, 'compute')
+
+            // need disabled.compute vs just compute for context
+            props[key] = typeof compute === 'function' ? disabled.compute() : disabled
+
+          // else grab value from component
+          } else {
+            props[key] = get(control, `args.named._map.${key}.inner`)
+          }
+        }
+
+        return props
+      }, {})
+
+    // POJO
+    } else {
+      return control
     }
   },
 
