@@ -3,6 +3,7 @@
  */
 
 import {expect} from 'chai'
+import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
 import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
 import {integration} from 'ember-test-utils/test-support/setup-component-test'
@@ -17,14 +18,17 @@ describe(test.label, function () {
   let sandbox
 
   beforeEach(function () {
+    initializeHook()
     sandbox = sinon.sandbox.create()
     registerMockComponent(this, 'mock-controls')
+    registerMockComponent(this, 'frost-button')
     this.set('selectedItems', [])
   })
 
   afterEach(function () {
     sandbox.restore()
     unregisterMockComponent(this, 'mock-controls')
+    unregisterMockComponent(this, 'frost-button')
   })
 
   describe('after render', function () {
@@ -201,6 +205,176 @@ describe(test.label, function () {
 
     it('should render with the provided loading text', function () {
       expect(this.$('.frost-action-bar-loading .loading-text').text()).to.equal('Loading actions')
+    })
+  })
+
+  describe('moreActions', function () {
+    describe('default', function () {
+      let buttonAction
+
+      beforeEach(function () {
+        buttonAction = sinon.spy()
+        this.set('buttonAction', buttonAction)
+
+        this.render(hbs`
+          {{frost-action-bar
+            controls=(array
+              (component 'mock-controls' class="control mock-controls" text='link')
+              (component 'frost-button' class="control test-button" text='button 1' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 2' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 3' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 4' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 5' onClick=(action buttonAction))
+            )
+            hook='bar'
+            hookQualifiers=(hash)
+            selectedItems=selectedItems
+          }}
+        `)
+      })
+
+      it('should limit controls to 4', function () {
+        expect(this.$('.control').length).to.equal(4)
+      })
+
+      it('should generate a moreActions button', function () {
+        expect($hook('moreActions').length).to.equal(1)
+      })
+
+      it('should move the extra buttons to li elements in the moreActions dropdown', function () {
+        const $moreButton = $hook('moreActions')
+        expect($moreButton.find('li').length).to.equal(2)
+      })
+
+      it('should slice buttons off the beginning of the list', function () {
+        const $moreButton = $hook('moreActions')
+        expect($moreButton.find('li').first().text().trim()).to.equal('button 1')
+      })
+
+      it('should pass through button actions', function () {
+        const $moreButton = $hook('moreActions')
+        $moreButton.find('li').first().click()
+        expect(buttonAction).to.have.callCount(1)
+      })
+    })
+
+    describe('set to false', function () {
+      beforeEach(function () {
+        this.render(hbs`
+          {{frost-action-bar
+            moreActions=false
+            controls=(array
+              (component 'frost-button' class="test-button" text='button 1')
+              (component 'frost-button' class="test-button" text='button 2')
+              (component 'frost-button' class="test-button" text='button 3')
+              (component 'frost-button' class="test-button" text='button 4')
+              (component 'frost-button' class="test-button" text='button 5')
+            )
+            hook='bar'
+            hookQualifiers=(hash)
+            selectedItems=selectedItems
+          }}
+        `)
+      })
+
+      it('should allow more than 4 buttons', function () {
+        expect(this.$('.test-button').length).to.equal(5)
+      })
+
+      it('should not generate a "More..." button', function () {
+        expect($hook('moreActions').length).to.equal(0)
+      })
+    })
+
+    describe('passed in template', function () {
+      beforeEach(function () {
+        this.render(hbs`
+          {{frost-action-bar
+            controls=(array 
+              (component 'frost-button' class="test-button" text='button 1')
+              (component 'frost-button' class="test-button" text='button 2')
+              (component 'frost-button' class="test-button" text='button 3')
+              (component 'frost-button' class="test-button" text='button 4')
+              (component 'frost-button' class="test-button" text='button 5')
+            )
+            moreActions=(array
+              (component 'frost-button' class="test-button" text='button 6')
+              (component 'frost-button' class="test-button" text='button 7')
+              (component 'frost-button' class="test-button" text='button 8')
+              (component 'frost-button' class="test-button" text='button 9')
+            )
+            hook='bar'
+            hookQualifiers=(hash)
+            selectedItems=selectedItems
+          }}
+        `)
+      })
+
+      it('should put moreActions into moreActions button', function () {
+        const $moreButton = $hook('moreActions')
+        expect($moreButton.find('li').length).to.equal(4)
+      })
+
+      it('should not put any controls into the moreActions', function () {
+        // 6 because 5 buttons plus 1 more button
+        expect($hook('frost-action-bar-buttons').find('dummy').length).to.equal(6)
+      })
+    })
+
+    describe('passed programmatically', function () {
+      let buttonAction
+
+      beforeEach(function () {
+        buttonAction = sinon.spy()
+
+        this.set('moreActions', [
+          {text: 'button 2', hook: 'button2', onClick: buttonAction},
+          {text: 'button 3', hook: 'button3'},
+          {text: 'button 4', hook: 'button4'}
+        ])
+
+        this.render(hbs`
+          {{frost-action-bar
+            moreActions=false
+            controls=(array
+              (component 'frost-button' class="test-button" text='button 1')
+            )
+            moreActions=moreActions
+            hook='bar'
+            hookQualifiers=(hash)
+            selectedItems=selectedItems
+          }}
+        `)
+      })
+
+      it('should put moreActions in the "More..." button', function () {
+        expect($hook('moreActions').find('li').length).to.equal(3)
+      })
+
+      it('should pass onClick action', function () {
+        $hook('button2').click()
+        expect(buttonAction).to.have.callCount(1)
+      })
+    })
+  })
+
+  describe('alwaysVisible', function () {
+    beforeEach(function () {
+      this.render(hbs`
+        {{frost-action-bar
+          controls=(array
+            (component 'frost-button' class="test-button" text='button 1')
+          )
+          alwaysVisible=true
+          hook='bar'
+          hookQualifiers=(hash)
+          selectedItems=selectedItems
+        }}
+      `)
+    })
+
+    it('should be visible when selectedItems is empty', function () {
+      expect(this.$('.frost-action-bar')).not.to.have.css('display', 'none')
     })
   })
 })

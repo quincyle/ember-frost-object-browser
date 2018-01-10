@@ -80,6 +80,22 @@ export default Controller.extend({
 
   @readOnly
   @computed('selectedItems.@each.label')
+  labelIncludesA (selectedItems) {
+    return selectedItems.find((selectedItem) => {
+      return selectedItem.get('label').toLowerCase().includes('a')
+    })
+  },
+
+  @readOnly
+  @computed('selectedItems.@each.label')
+  labelIncludesB (selectedItems) {
+    return selectedItems.find((selectedItem) => {
+      return selectedItem.get('label').toLowerCase().includes('b')
+    })
+  },
+
+  @readOnly
+  @computed('selectedItems.@each.label')
   labelIncludesF (selectedItems) {
     return selectedItems.find((selectedItem) => {
       return selectedItem.get('label').toLowerCase().includes('f')
