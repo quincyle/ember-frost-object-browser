@@ -49,7 +49,7 @@ export default Component.extend({
       PropTypes.object
     ]),
     isLoading: PropTypes.bool,
-    forceVisible: PropTypes.bool,
+    alwaysVisible: PropTypes.bool,
 
     // callbacks
     getSelectedItemsLabel: PropTypes.func
@@ -60,7 +60,7 @@ export default Component.extend({
   getDefaultProps () {
     return {
       // options
-      forceVisible: false,
+      alwaysVisible: false,
       i18n: {
         formatSelectedItemsLabel (count) {
           const items = (count > 1) ? 'Items' : 'Item'
@@ -83,7 +83,7 @@ export default Component.extend({
   @readOnly
   @computed('selectedItems.[]')
   isVisible (selectedItems) {
-    return this.get('forceVisible') || !isEmpty(selectedItems)
+    return this.get('alwaysVisible') || !isEmpty(selectedItems)
   },
 
   @readOnly
@@ -107,11 +107,11 @@ export default Component.extend({
 
     // slice off extra buttons if needed (default)
     if (moreActions === true) {
-      let buttonCount = controls.filter(control => !this.isFrostButton(control)).length
+      let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
       // reverse to take buttons off the end
       controls = controls.reverse()
-        .filter(control => !this.isFrostButton(control) || ++buttonCount <= MAX_CONTROLS)
+        .filter(control => !this.hasOnClick(control) || ++clickableCount <= MAX_CONTROLS)
       controls.reverse()
     }
 
@@ -139,16 +139,16 @@ export default Component.extend({
 
     // get the extra buttons if needed (default)
     if (moreActions === true) {
-      let buttonCount = controls.filter(control => !this.isFrostButton(control)).length
+      let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
       // reverse to grab buttons from the end
       moreActions = controls.reverse()
-        .filter(control => this.isFrostButton(control) && ++buttonCount > MAX_CONTROLS)
+        .filter(control => this.hasOnClick(control) && ++clickableCount > MAX_CONTROLS)
       moreActions.reverse()
     }
 
     // convert buttons to POJOs if needed
-    return moreActions.map(button => this.isFrostButton(button) ? this.convertButton(button) : button)
+    return moreActions.map(button => this.hasOnClick(button) ? this.convertControl(button) : button)
   },
 
   // == Functions =============================================================
@@ -158,7 +158,7 @@ export default Component.extend({
    * @param {FrostButton} button - a frost-button to convert
    * @returns {object} - plain object of props for moreActions button
    */
-  convertButton (button) {
+  convertControl (button) {
     const propNames = ['disabled', 'hook', 'onClick', 'text']
 
     // ember 2.12+
@@ -176,14 +176,16 @@ export default Component.extend({
 
           // else grab value from component
           } else {
-            // props[key] = get(button, `args.named._map.${key}.inner`)
-            props[key] = button.args.named._map[key].inner
+            props[key] = get(button, `args.named._map.${key}.inner`)
           }
         }
 
         return props
       }, {})
+
     // ember 2.8
+    // TODO remove when we stop support Ember 2.8
+    // Ember 2.8 handled the internals of the passed component definition differently
     } else {
       let hashKey = Object.keys(button).filter(key => /hash/i.test(key))
 
@@ -236,12 +238,15 @@ export default Component.extend({
   },
 
   /**
-   * checks whether a given component is a frost-buttons
-   * @param {Ember.Component|object} component - component to check
-   * @returns {boolean} - whether component is a frost-button
+   * checks whether a component definition has an onClick handler
+   * @param {Ember.Component|object} control - control to check whether has onClick
+   * @returns {boolean} whether the control does indeed have an onClick
    */
-  isFrostButton (component) {
-    return Object.values(component).includes('frost-button')
+  hasOnClick (control) {
+    if (control.onClick || this.convertControl(control).onClick) {
+      return true
+    }
+    return false
   },
 
   /**

@@ -46,9 +46,9 @@ describe(test.label, function () {
   })
 
   describe('ember 2.12', function () {
-    describe('convertButton', function () {
+    describe('convertControl', function () {
       it('should convert a button to a POJO', function () {
-        expect(component.convertButton(button212)).to.eql({
+        expect(component.convertControl(button212)).to.eql({
           disabled: disabled,
           hook: 'testHook',
           onClick: onClick,
@@ -57,23 +57,23 @@ describe(test.label, function () {
       })
     })
 
-    describe('isFrostButton', function () {
+    describe('hasOnClick', function () {
       it('should return true if component is a frost button', function () {
-        expect(component.isFrostButton(button212)).to.equal(true)
+        expect(component.hasOnClick(button212)).to.equal(true)
       })
 
-      it('should return false if component is a frost button', function () {
+      it('should return false if component is not a frost button', function () {
         let button = {hook: 'dummyButton POJO'}
 
-        expect(component.isFrostButton(button)).to.equal(false)
+        expect(component.hasOnClick(button)).to.equal(false)
       })
     })
   })
 
   describe('ember 2.8', function () {
-    describe('convertButton', function () {
+    describe('convertControl', function () {
       it('should convert a button to a POJO', function () {
-        expect(component.convertButton(button28)).to.eql({
+        expect(component.convertControl(button28)).to.eql({
           disabled: disabled,
           hook: 'testHook',
           onClick: onClick,
@@ -82,15 +82,15 @@ describe(test.label, function () {
       })
     })
 
-    describe('isFrostButton', function () {
+    describe('hasOnClick', function () {
       it('should return true if component is a frost button', function () {
-        expect(component.isFrostButton(button28)).to.equal(true)
+        expect(component.hasOnClick(button28)).to.equal(true)
       })
 
-      it('should return false if component is a frost button', function () {
+      it('should return false if component is not a frost button', function () {
         let button = {hook: 'dummyButton POJO'}
 
-        expect(component.isFrostButton(button)).to.equal(false)
+        expect(component.hasOnClick(button)).to.equal(false)
       })
     })
   })

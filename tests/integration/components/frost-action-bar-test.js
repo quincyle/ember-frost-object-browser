@@ -221,10 +221,10 @@ describe(test.label, function () {
             controls=(array
               (component 'mock-controls' class="control mock-controls" text='link')
               (component 'frost-button' class="control test-button" text='button 1' onClick=(action buttonAction))
-              (component 'frost-button' class="control test-button" text='button 2')
-              (component 'frost-button' class="control test-button" text='button 3')
-              (component 'frost-button' class="control test-button" text='button 4')
-              (component 'frost-button' class="control test-button" text='button 5')
+              (component 'frost-button' class="control test-button" text='button 2' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 3' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 4' onClick=(action buttonAction))
+              (component 'frost-button' class="control test-button" text='button 5' onClick=(action buttonAction))
             )
             hook='bar'
             hookQualifiers=(hash)
@@ -358,14 +358,14 @@ describe(test.label, function () {
     })
   })
 
-  describe('forceVisible', function () {
+  describe('alwaysVisible', function () {
     beforeEach(function () {
       this.render(hbs`
         {{frost-action-bar
           controls=(array
             (component 'frost-button' class="test-button" text='button 1')
           )
-          forceVisible=true
+          alwaysVisible=true
           hook='bar'
           hookQualifiers=(hash)
           selectedItems=selectedItems

@@ -31,10 +31,10 @@ ember install ember-frost-object-browser
 | controls        | `array`                                     |       | Controls that will be available in the action bar   |
 | isLoading       | `boolean`                                   | false | **default** - Action bar is not in a loading state  |
 |                 |                                             | true  | Action bar is in a loading state                    |
-| forceVisible    | `boolean`                                   |       | forces the component's visibility                   |
+| alwaysVisible   | `boolean`                                   |       | forces the component's visibility                   |
 | loadingText     | `string`                                    |       | Text that appears beside the loading animation      |
 | moreActions     | `Ember.Component[]|boolean|object[]|object` |       | Only accepts `frost-button`s if passing components  |
-| moreActiosnText | `string`                                    |       | Text for 'More...' button                           |
+| moreActionsText | `string`                                    |       | Text for 'More...' button                           |
 | selectedItems   | `array`                                     |       | List of items that are currently selected           |
 
 ## Examples
