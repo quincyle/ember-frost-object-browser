@@ -47,7 +47,7 @@ describe(test.label, function () {
 
   describe('ember 2.12', function () {
     describe('convertControl', function () {
-      it('should convert a button to a POJO', function () {
+      it('should convert a control to a POJO', function () {
         expect(component.convertControl(button212)).to.eql({
           disabled: disabled,
           hook: 'testHook',
@@ -58,11 +58,11 @@ describe(test.label, function () {
     })
 
     describe('hasOnClick', function () {
-      it('should return true if component is a frost button', function () {
+      it('should return true if component has an onClick property', function () {
         expect(component.hasOnClick(button212)).to.equal(true)
       })
 
-      it('should return false if component is not a frost button', function () {
+      it('should return false if component does not have an onClick property', function () {
         let button = {hook: 'dummyButton POJO'}
 
         expect(component.hasOnClick(button)).to.equal(false)
@@ -83,11 +83,11 @@ describe(test.label, function () {
     })
 
     describe('hasOnClick', function () {
-      it('should return true if component is a frost button', function () {
+      it('should return true if component has an onClick property', function () {
         expect(component.hasOnClick(button28)).to.equal(true)
       })
 
-      it('should return false if component is not a frost button', function () {
+      it('should return false if component does not have an onClick property', function () {
         let button = {hook: 'dummyButton POJO'}
 
         expect(component.hasOnClick(button)).to.equal(false)
