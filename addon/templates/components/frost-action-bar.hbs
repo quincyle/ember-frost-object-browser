@@ -29,7 +29,7 @@
           {{#each _moreActions as |action|}}
             {{#if action.disabled}}
               <li
-                class='disabled'
+                class='{{action.classNames}}'
                 data-test={{hook action.hook}}
                 role='button'
               >
@@ -37,6 +37,7 @@
               </li>
             {{else}}
               <li
+                class='{{action.classNames}}'
                 data-test={{hook action.hook}}
                 onClick={{action.onClick}}
                 role='button'

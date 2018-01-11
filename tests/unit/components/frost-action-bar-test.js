@@ -49,6 +49,7 @@ describe(test.label, function () {
     describe('convertControl', function () {
       it('should convert a control to a POJO', function () {
         expect(component.convertControl(button212)).to.eql({
+          classNames: 'disabled invisible',
           disabled: disabled,
           hook: 'testHook',
           onClick: onClick,
@@ -74,8 +75,10 @@ describe(test.label, function () {
     describe('convertControl', function () {
       it('should convert a button to a POJO', function () {
         expect(component.convertControl(button28)).to.eql({
+          classNames: 'disabled invisible',
           disabled: disabled,
           hook: 'testHook',
+          isVisible: undefined,
           onClick: onClick,
           text: 'test button'
         })
