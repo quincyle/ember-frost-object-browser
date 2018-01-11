@@ -1,3 +1,8 @@
+# 19.0.1 (2018-01-11)
+- fixed #163 improved documentation for frost-action-bar
+- added handling for visibility of components passed to moreActions
+
+
 # 19.0.0 (2018-01-10)
 
 * Added "More..." button
