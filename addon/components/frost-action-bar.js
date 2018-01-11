@@ -236,15 +236,11 @@ export default Component.extend({
       result = control
     }
 
-    result.classNames = ''
-
-    if (result.disabled) {
-      result.classNames += 'disabled'
-    }
-
-    if (!result.isVisible) {
-      result.classNames += ' invisible'
-    }
+    // set classNames
+    result.classNames = [
+      result.disabled ? 'disabled' : '',
+      !result.isVisible ? 'invisible' : ''
+    ].join(' ')
 
     return result
   },
