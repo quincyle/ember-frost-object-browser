@@ -145,7 +145,7 @@ onSortingChange (sortOrder) {…}
       onClick=(action 'doTheSecondExtraThing')
     )
     (component 'frost-button'
-      text='Extra button Three'
+      text='Extra button three'
       hook='extraButtonThree'
       onClick=(action 'doTheThirdExtraThing')
     )
