@@ -164,8 +164,7 @@ export default Component.extend({
   // == Functions =============================================================
 
   controlIsVisible (control) {
-    const isVisible = this.convertControl(control).isVisible
-    return isVisible !== false || isVisible !== null
+    return this.convertControl(control).isVisible !== false
   },
 
   /**
