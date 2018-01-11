@@ -144,6 +144,7 @@ export default Component.extend({
 
     // get the extra controls if needed (default)
     if (moreActions === true) {
+      // get count of components that have onClick defined
       let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
       // grab controls from beginning for moreACtions button if we have more than 4
