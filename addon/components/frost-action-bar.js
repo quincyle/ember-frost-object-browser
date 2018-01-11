@@ -165,7 +165,6 @@ export default Component.extend({
 
   controlIsVisible (control) {
     const isVisible = this.convertControl(control).isVisible
-
     return isVisible !== false || isVisible !== null
   },
 
@@ -240,7 +239,7 @@ export default Component.extend({
     result.classNames = [
       result.disabled ? 'disabled' : '',
       !result.isVisible ? 'invisible' : ''
-    ].join(' ')
+    ].filter(prop => !!prop).join(' ')
 
     return result
   },
