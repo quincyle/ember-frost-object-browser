@@ -107,11 +107,16 @@ export default Component.extend({
 
     // slice off extra controls if needed (default)
     if (moreActions === true) {
+      // get count of components that have onClick defined
       let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
-      // reverse to take controls off the end
+      // remove controls from the beginning of array when we have more than 4
+      // only remove controls with onClick defined
+      // also ignore invisible controls
       controls = controls.reverse()
-        .filter(control => !this.hasOnClick(control) || ++clickableCount <= MAX_CONTROLS)
+        .filter(control => !this.hasOnClick(control) ||
+           !this.controlIsVisible(control) ||
+           ++clickableCount <= MAX_CONTROLS)
       controls.reverse()
     }
 
@@ -139,11 +144,16 @@ export default Component.extend({
 
     // get the extra controls if needed (default)
     if (moreActions === true) {
+      // get count of components that have onClick defined
       let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
 
-      // reverse to grab controls from the end
+      // grab controls from beginning for moreACtions button if we have more than 4
+      // only grab controls which have onClick defined
+      // ignore invisible controls
       moreActions = controls.reverse()
-        .filter(control => this.hasOnClick(control) && ++clickableCount > MAX_CONTROLS)
+        .filter(control => this.controlIsVisible(control) &&
+          this.hasOnClick(control) &&
+          ++clickableCount > MAX_CONTROLS)
       moreActions.reverse()
     }
 
@@ -153,14 +163,20 @@ export default Component.extend({
 
   // == Functions =============================================================
 
+  controlIsVisible (control) {
+    const isVisible = this.convertControl(control).isVisible
+    return isVisible !== false || isVisible !== null
+  },
+
   /**
    * converts a control to a hash of arguments to be used for building the moreActions button
    * @param {Ember.Component|object} control - a control to convert
    * @returns {object} - plain object of props for moreActions button
    */
   convertControl (control) {
-    const propNames = ['disabled', 'hook', 'onClick', 'text']
+    const propNames = ['disabled', 'isVisible', 'hook', 'onClick', 'text']
     let hashKey = Object.keys(control).filter(key => /component_hash/i.test(key))
+    let result
 
     // ember 2.8
     // TODO remove when we stop supporting Ember 2.8
@@ -170,7 +186,7 @@ export default Component.extend({
 
       const hash = control[hashKey]
 
-      return propNames.reduce((props, key) => {
+      result = propNames.reduce((props, key) => {
         let val = hash[key]
 
         // compute if necessary
@@ -187,16 +203,23 @@ export default Component.extend({
 
     // ember 2.12+
     } else if (get(control, 'args.named.keys')) {
-      return control.args.named.keys.reduce((props, key) => {
+      result = control.args.named.keys.reduce((props, key) => {
         // only get specified prop names
         if (propNames.includes(key)) {
-          // compute the disabled property if exists and is needed
-          if (key === 'disabled') {
-            let disabled = get(control, 'args.named._map.disabled')
-            let compute = get(disabled, 'compute')
+          // compute the property if exists and is needed
+          let val = get(control, `args.named._map.${key}`)
 
-            // need disabled.compute vs just compute for context
-            props[key] = typeof compute === 'function' ? disabled.compute() : disabled
+          if (val.compute) {
+            let compute = val.compute
+            let lastVal = val._lastValue
+
+            // use lastVal
+            if (lastVal !== undefined && lastVal !== null) {
+              props[key] = lastVal
+            } else {
+              // need val.compute vs just compute for context
+              props[key] = typeof compute === 'function' ? val.compute() : val
+            }
 
           // else grab value from component
           } else {
@@ -209,8 +232,16 @@ export default Component.extend({
 
     // POJO
     } else {
-      return control
+      result = control
     }
+
+    // set classNames
+    result.classNames = [
+      result.disabled ? 'disabled' : '',
+      !result.isVisible ? 'invisible' : ''
+    ].filter(prop => !!prop).join(' ')
+
+    return result
   },
 
   /**

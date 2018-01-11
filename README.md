@@ -26,16 +26,19 @@ ember install ember-frost-object-browser
 
 ### Action Bar
 
-| Attribute       | Type                                        | Value | Description                                         |
-| --------------- | ----------------------------------          | ----- | --------------------------------------------------- |
-| controls        | `array`                                     |       | Controls that will be available in the action bar   |
-| isLoading       | `boolean`                                   | false | **default** - Action bar is not in a loading state  |
-|                 |                                             | true  | Action bar is in a loading state                    |
-| alwaysVisible   | `boolean`                                   |       | forces the component's visibility                   |
-| loadingText     | `string`                                    |       | Text that appears beside the loading animation      |
-| moreActions     | `Ember.Component[]|boolean|object[]|object` |       | Only accepts `frost-button`s if passing components  |
-| moreActionsText | `string`                                    |       | Text for 'More...' button                           |
-| selectedItems   | `array`                                     |       | List of items that are currently selected           |
+| Attribute       | Type                                           | Value         | Description                                                 |
+| --------------- | ---------------------------------------------- | ------------- | ----------------------------------------------------------- |
+| controls        | `Ember.Component[]`                            |               | Controls that will be available in the action bar           |
+| isLoading       | `boolean`                                      | false         | **default** - Action bar is not in a loading state          |
+|                 |                                                | true          | Action bar is in a loading state                            |
+| alwaysVisible   | `boolean`                                      | false         | **default** action bar shows when selectedItems has length  |
+|                 |                                                | true          | action bar will always be visible                           |
+| loadingText     | `string`                                       |               | Text that appears beside the loading animation              |
+| moreActions     | `Ember.Component[]\|boolean\|object[]\|object` | true          | **default** - Auto-aggregate buttons for moreActions button |
+|                 |                                                | false         | No More... button, controls used as passed                  |
+|                 |                                                | array\|object | Components or hash defining actions for moreActions button  |
+| moreActionsText | `string`                                       | 'More...'     | **default** Text for 'More...' button                       |
+| selectedItems   | `Ember.Component[]\|object[]`                  |               | List of items that are currently selected                   |
 
 ## Examples
 
@@ -119,41 +122,160 @@ onSortingChange (sortOrder) {…}
 
 ### Action Bar
 
-#### Template
+#### Template Examples
 
 ```handlebars
-  {{frost-action-bar
-    controls=(array
-      (component 'frost-link'
-        priority='primary'
-        routes=detailLinkRoutes
-        size='medium'
-        text='Detail'
-      )
+{{! default moreActions behavior }}
+{{frost-action-bar
+  controls=(array
+    (component 'frost-link'
+      priority='primary'
+      routes=detailLinkRoutes
+      size='medium'
+      text='Detail'
     )
-    moreActions=(array
-      (component 'frost-button'
-        text='Extra button one'
-        hook='extraButtonOne'
-        onClick=(action 'doTheFirstExtraThing')
-      )
-      (component 'frost-button'
-        text='Extra button two'
-        hook='extraButtonTwo'
-        onClick=(action 'doTheSecondExtraThing')
-      )
+    (component 'frost-button'
+      text='Extra button one'
+      hook='extraButtonOne'
+      onClick=(action 'doTheFirstExtraThing')
     )
-    isLoading=isLoading
-    loadingText='Loading actions'
-    selectedItems=selectedItems
-  }}
+    (component 'frost-button'
+      text='Extra button two'
+      hook='extraButtonTwo'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button Three'
+      hook='extraButtonThree'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button four'
+      hook='extraButtonFour'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button five'
+      hook='extraButtonFive'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+  )
+  isLoading=isLoading
+  loadingText='Loading actions'
+  selectedItems=selectedItems
+}}
+```
+```handlebars
+{{! override default moreActions behavior }}
+{{frost-action-bar
+  controls=(array
+    (component 'frost-link'
+      priority='primary'
+      routes=detailLinkRoutes
+      size='medium'
+      text='Detail'
+    )
+    (component 'frost-button'
+      text='Extra button one'
+      hook='extraButtonOne'
+      onClick=(action 'doTheFirstExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button two'
+      hook='extraButtonTwo'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button Three'
+      hook='extraButtonThree'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button four'
+      hook='extraButtonFour'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button five'
+      hook='extraButtonFive'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+  )
+  moreActions=false
+  isLoading=isLoading
+  loadingText='Loading actions'
+  selectedItems=selectedItems
+}}
+```
+```handlebars
+{{! manual moreActions }}
+{{frost-action-bar
+  controls=(array
+    (component 'frost-link'
+      priority='primary'
+      routes=detailLinkRoutes
+      size='medium'
+      text='Detail'
+    )
+  )
+  moreActions=(array
+    (component 'frost-button'
+      text='Extra button one'
+      hook='extraButtonOne'
+      onClick=(action 'doTheFirstExtraThing')
+    )
+    (component 'frost-button'
+      text='Extra button two'
+      hook='extraButtonTwo'
+      onClick=(action 'doTheSecondExtraThing')
+    )
+  )
+  isLoading=isLoading
+  loadingText='Loading actions'
+  selectedItems=selectedItems
+}}
 ```
 
 A scenario where the loading state in the action bar might be useful is if there is some amount of processing that needs to be done in order to determine the state of the controls within the action bar. For example, determining whether a button should be enabled/disabled or shown/hidden. Note that the loading animation is the ring type from [ember-frost-core](https://github.com/ciena-frost/ember-frost-core).
 
 #### More... Button
 
-By default, if the action bar has more than 4 items, it will take any components with an `onClick` property and wrap them up into a `More...` button with a popover list of all the extra possible actions. This can be overridden by setting `moreActions=false` or by manually setting the action buttons you want wrapped up as in the template above. The `moreActions` property accepts either components with an `onClick` property or POJOs that define `hook`, `text`, `onClick`, and optionally `disabled`.
+By default, if the action bar has more than 4 visible components, only the last 4 will be shown. The rest will be collapsed into a "More..." button with a popover list of the remaining actions. Only components with an `onClick` property will be automatically collapsed. This can be overridden by setting `moreActions=false` or by manually setting the action buttons you want wrapped up. The `moreActions` property accepts either components with an `onClick` property or `POJO`s that define `hook`, `text`, `onClick`, and optionally `disabled` and `isVisible`.
+
+##### POJO example
+
+```javascript
+...
+moreActions: {
+  button1: {
+    hook: 'button1',
+    text: 'button 1',
+    onClick: function () { // do something }
+  },
+  button2: {
+    hook: 'button2',
+    text: 'button 2',
+    onClick: function () { // do something }
+  }
+}
+...
+```
+```handlebars
+{{frost-action-bar
+  controls=(array
+    (component 'frost-link'
+      priority='primary'
+      routes=detailLinkRoutes
+      size='medium'
+      text='Detail'
+    )
+  )
+  moreActions=moreActions
+  isLoading=isLoading
+  loadingText='Loading actions'
+  selectedItems=selectedItems
+}}
+```
 
 ## Demo
 
