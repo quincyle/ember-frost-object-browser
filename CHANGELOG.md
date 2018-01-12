@@ -1,3 +1,8 @@
+# 19.0.2 (2018-01-12)
+* BPSO-51234 fixed isVisible check
+* updated readme to be nominally less confusing
+* scheduled removal of string-pluralize per #122
+
 # 19.0.1 (2018-01-11)
 - fixed #163 improved documentation for frost-action-bar
 - added handling for visibility of components passed to moreActions
