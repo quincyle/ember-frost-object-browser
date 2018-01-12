@@ -1,3 +1,7 @@
+# 19.0.3 (2018-01-12)
+* re-added string-pluralize helper for deprecation in MAJOR release
+
+
 # 19.0.2 (2018-01-12)
 * BPSO-51234 fixed isVisible check
 * updated readme to be nominally less confusing
