@@ -164,8 +164,7 @@ export default Component.extend({
   // == Functions =============================================================
 
   controlIsVisible (control) {
-    const isVisible = this.convertControl(control).isVisible
-    return isVisible !== false || isVisible !== null
+    return this.convertControl(control).isVisible !== false
   },
 
   /**
@@ -209,8 +208,7 @@ export default Component.extend({
           // compute the property if exists and is needed
           let val = get(control, `args.named._map.${key}`)
 
-          if (val.compute) {
-            let compute = val.compute
+          if (val.compute || val._lastValue) {
             let lastVal = val._lastValue
 
             // use lastVal
@@ -218,7 +216,7 @@ export default Component.extend({
               props[key] = lastVal
             } else {
               // need val.compute vs just compute for context
-              props[key] = typeof compute === 'function' ? val.compute() : val
+              props[key] = val.compute()
             }
 
           // else grab value from component

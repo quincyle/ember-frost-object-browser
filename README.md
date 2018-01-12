@@ -145,19 +145,19 @@ onSortingChange (sortOrder) {…}
       onClick=(action 'doTheSecondExtraThing')
     )
     (component 'frost-button'
-      text='Extra button Three'
+      text='Extra button three'
       hook='extraButtonThree'
-      onClick=(action 'doTheSecondExtraThing')
+      onClick=(action 'doTheThirdExtraThing')
     )
     (component 'frost-button'
       text='Extra button four'
       hook='extraButtonFour'
-      onClick=(action 'doTheSecondExtraThing')
+      onClick=(action 'doTheFourthExtraThing')
     )
     (component 'frost-button'
       text='Extra button five'
       hook='extraButtonFive'
-      onClick=(action 'doTheSecondExtraThing')
+      onClick=(action 'doTheFifthExtraThing')
     )
   )
   isLoading=isLoading
