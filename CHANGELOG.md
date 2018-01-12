@@ -1,3 +1,7 @@
+# 20.0.0 (2018-01-12)
+* **Removed** `string-pluralize` again as MAJOR
+
+
 # 19.0.3 (2018-01-12)
 * re-added string-pluralize helper for deprecation in MAJOR release
 
