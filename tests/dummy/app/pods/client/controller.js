@@ -1,5 +1,5 @@
 import Ember from 'ember'
-const {A, Controller, get, inject, isEmpty} = Ember
+const {A, Controller, Logger, get, inject, isEmpty} = Ember
 import computed, {readOnly} from 'ember-computed-decorators'
 import {generateFacetView} from 'ember-frost-bunsen/utils'
 import {sort} from 'ember-frost-sort'

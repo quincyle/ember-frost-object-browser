@@ -3,6 +3,7 @@
  */
 
 import {expect} from 'chai'
+import Ember from 'ember'
 import {$hook, initialize as initializeHook} from 'ember-hook'
 import wait from 'ember-test-helpers/wait'
 import {registerMockComponent, unregisterMockComponent} from 'ember-test-utils/test-support/mock-component'
@@ -10,6 +11,8 @@ import {integration} from 'ember-test-utils/test-support/setup-component-test'
 import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import sinon from 'sinon'
+
+const {Logger, on} = Ember
 
 const test = integration('frost-action-bar')
 describe(test.label, function () {
@@ -21,7 +24,13 @@ describe(test.label, function () {
     initializeHook()
     sandbox = sinon.sandbox.create()
     registerMockComponent(this, 'mock-controls')
-    registerMockComponent(this, 'frost-button')
+    registerMockComponent(this, 'frost-button', {
+      onclick: on('click', function (event) {
+        if (this.onClick) {
+          this.onClick()
+        }
+      })
+    })
     this.set('selectedItems', [])
   })
 
@@ -214,7 +223,10 @@ describe(test.label, function () {
 
       beforeEach(function () {
         buttonAction = sinon.spy()
-        this.set('buttonAction', buttonAction)
+        this.setProperties({
+          buttonAction,
+          selectedItems: [{}]
+        })
 
         this.render(hbs`
           {{frost-action-bar
@@ -234,7 +246,7 @@ describe(test.label, function () {
       })
 
       it('should limit controls to 4', function () {
-        expect(this.$('.control').length).to.equal(4)
+        expect($hook('frost-action-bar-buttons').children('.control:visible').length).to.equal(4)
       })
 
       it('should generate a moreActions button', function () {
@@ -248,13 +260,14 @@ describe(test.label, function () {
 
       it('should slice buttons off the beginning of the list', function () {
         const $moreButton = $hook('moreActions')
-        expect($moreButton.find('li').first().text().trim()).to.equal('button 1')
+        expect($moreButton.find('li > *').first().hasClass('mock-controls')).to.equal(true)
       })
 
       it('should pass through button actions', function () {
         const $moreButton = $hook('moreActions')
-        $moreButton.find('li').first().click()
-        expect(buttonAction).to.have.callCount(1)
+        $moreButton.find('li > .test-button').first().click()
+        Logger.log(this.$().html())
+        expect(this.get('buttonAction')).to.have.callCount(1)
       })
     })
 
@@ -288,6 +301,7 @@ describe(test.label, function () {
 
     describe('passed in template', function () {
       beforeEach(function () {
+        this.set('selectedItems', [{}])
         this.render(hbs`
           {{frost-action-bar
             controls=(array 
@@ -316,8 +330,7 @@ describe(test.label, function () {
       })
 
       it('should not put any controls into the moreActions', function () {
-        // 6 because 5 buttons plus 1 more button
-        expect($hook('frost-action-bar-buttons').find('dummy').length).to.equal(6)
+        expect($hook('frost-action-bar-buttons').children('.test-button').length).to.equal(5)
       })
     })
 
@@ -329,8 +342,8 @@ describe(test.label, function () {
 
         this.set('moreActions', [
           {text: 'button 2', hook: 'button2', onClick: buttonAction},
-          {text: 'button 3', hook: 'button3'},
-          {text: 'button 4', hook: 'button4'}
+          {text: 'button 3', hook: 'button3', onClick: buttonAction},
+          {text: 'button 4', hook: 'button4', onClick: buttonAction}
         ])
 
         this.render(hbs`
