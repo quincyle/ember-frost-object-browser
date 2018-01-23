@@ -260,7 +260,7 @@ describe(test.label, function () {
 
       it('should slice buttons off the beginning of the list', function () {
         const $moreButton = $hook('moreActions')
-        expect($moreButton.find('li > *').first().hasClass('mock-controls')).to.equal(true)
+        expect($moreButton.find('li > *').first()).to.have.class('mock-controls')
       })
 
       it('should pass through button actions', function () {
