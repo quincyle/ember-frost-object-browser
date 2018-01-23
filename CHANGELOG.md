@@ -1,3 +1,9 @@
+# 20.0.1 (2018-01-23)
+* fixed styling of action bar
+* removed ember version specific code
+* started using passed in components to allow natural state handling of properties
+
+
 # 20.0.0 (2018-01-12)
 * **Removed** `string-pluralize` again as MAJOR
 
