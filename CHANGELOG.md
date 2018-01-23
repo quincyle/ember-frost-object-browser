@@ -1,3 +1,7 @@
+# 20.0.2 (2018-01-23)
+* improved css to handle hidden items in the moreActions popover
+
+
 # 20.0.1 (2018-01-23)
 * fixed styling of action bar
 * removed ember version specific code
