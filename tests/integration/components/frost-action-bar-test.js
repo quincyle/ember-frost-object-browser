@@ -12,7 +12,7 @@ import hbs from 'htmlbars-inline-precompile'
 import {afterEach, beforeEach, describe, it} from 'mocha'
 import sinon from 'sinon'
 
-const {Logger, on} = Ember
+const {on} = Ember
 
 const test = integration('frost-action-bar')
 describe(test.label, function () {
