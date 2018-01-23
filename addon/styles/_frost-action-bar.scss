@@ -68,9 +68,8 @@ $frost-input-select-option-row-height: 35px;
 
       li {
         width: 100%;
-        height: $frost-input-select-option-row-height;
+        min-height: 0;
         padding: 0 5px;
-        border-bottom: solid 1px $frost-color-lgrey-3;
         color: $frost-color-blue-1;
         line-height: $frost-input-select-option-row-height;
         list-style: none;
@@ -99,9 +98,11 @@ $frost-input-select-option-row-height: 35px;
         & > *:hover,
         & > *:active,
         & > *:focus {
+          height: $frost-input-select-option-row-height;
           margin: 0;
           padding: 0;
           border: 0;
+          border-bottom: solid 1px $frost-color-lgrey-3;
           background: none !important; // sass-lint:disable-line no-important
           color: $frost-color-blue-1;
           box-shadow: none !important; // sass-lint:disable-line no-important
