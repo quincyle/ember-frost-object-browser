@@ -266,7 +266,6 @@ describe(test.label, function () {
       it('should pass through button actions', function () {
         const $moreButton = $hook('moreActions')
         $moreButton.find('li > .test-button').first().click()
-        Logger.log(this.$().html())
         expect(this.get('buttonAction')).to.have.callCount(1)
       })
     })

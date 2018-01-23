@@ -95,10 +95,10 @@ $frost-input-select-option-row-height: 35px;
           background: transparentize($frost-selection, .92);
         }
 
-        *,
-        *:hover,
-        *:active,
-        *:focus {
+        & > *,
+        & > *:hover,
+        & > *:active,
+        & > *:focus {
           margin: 0;
           padding: 0;
           border: 0;

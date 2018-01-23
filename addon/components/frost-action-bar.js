@@ -99,8 +99,7 @@ export default Component.extend({
    * gets controls for the action bar
    * @param {Ember.Component[]|object} controls - array or hash of controls
    * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering controls
-   * @param {string} controlsSliceIndex - index to slice the controls at for auto moreActions
-   *  or flag indicating whether to generate them automatically
+   * @param {number} controlsSliceIndex - index to slice the controls at for auto moreActions
    * @returns {Ember.Component[]} array of controls
    */
   _controls (controls, selectedItems, controlsSliceIndex) {
@@ -115,7 +114,7 @@ export default Component.extend({
    * @param {Ember.Component[]|object} controls - array or hash of controls
    * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering moreActions
    * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of moreActions
-   * @param {string} controlsSliceIndex - index to slice the controls at for auto moreActions
+   * @param {number} controlsSliceIndex - index to slice the controls at for auto moreActions
    *  or flag indicating whether to generate them automatically
    * @returns {object[]} array of moreActions definitions
    */
