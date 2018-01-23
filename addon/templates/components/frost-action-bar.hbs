@@ -14,6 +14,7 @@
 <div class='{{css}}-buttons' data-test={{hook 'frost-action-bar-buttons'}}>
   {{#if _moreActions.length}}
     {{#frost-button
+      class='frost-more-button'
       hook='moreActions'
       priority='secondary'
       size='medium'
@@ -22,28 +23,24 @@
       {{#frost-popover
         classNames='more-actions-popover'
         closest=true
+        offset=30
         position='top'
-        target='.frost-button'
+        target='.frost-more-button'
       }}
         <ul>
-          {{#each _moreActions as |action|}}
-            {{#if action.disabled}}
-              <li
-                class='{{action.classNames}}'
-                data-test={{hook action.hook}}
-                role='button'
-              >
-                {{action.text}}
+          {{#each _moreActions as |control|}}
+            {{#if control.isPOJO}}
+              <li>
+                {{frost-button
+                  hook=control.hook
+                  text=control.text
+                  onClick=control.onClick
+                  disabled=control.disabled
+                  isVisible=control.isVisible
+                }}
               </li>
             {{else}}
-              <li
-                class='{{action.classNames}}'
-                data-test={{hook action.hook}}
-                onClick={{action.onClick}}
-                role='button'
-              >
-                {{action.text}}
-              </li>
+              <li>{{component control}}</li>
             {{/if}}
           {{/each}}
         </ul>

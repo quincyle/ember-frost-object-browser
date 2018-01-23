@@ -58,9 +58,6 @@ $frost-input-select-option-row-height: 35px;
     margin-left: 15px;
   }
 
-  .invisible {
-    display: none;
-  }
 
   .more-actions-popover {
     z-index: 10;
@@ -96,6 +93,18 @@ $frost-input-select-option-row-height: 35px;
 
         &:hover {
           background: transparentize($frost-selection, .92);
+        }
+
+        & > *,
+        & > *:hover,
+        & > *:active,
+        & > *:focus {
+          margin: 0;
+          padding: 0;
+          border: 0;
+          background: none !important; // sass-lint:disable-line no-important
+          color: $frost-color-blue-1;
+          box-shadow: none !important; // sass-lint:disable-line no-important
         }
       }
     }

@@ -61,6 +61,8 @@ export default Component.extend({
     return {
       // options
       alwaysVisible: false,
+      controlsMap: [],
+      controlsSliceIndex: 0,
       i18n: {
         formatSelectedItemsLabel (count) {
           const items = (count > 1) ? 'Items' : 'Item'
@@ -68,7 +70,6 @@ export default Component.extend({
         }
       },
       isLoading: false,
-
       moreActions: true,
       moreActionsText: 'More...'
 
@@ -93,154 +94,49 @@ export default Component.extend({
   },
 
   @readOnly
-  @computed('controls', 'selectedItems.[]', 'moreActions')
+  @computed('controls', 'selectedItems.[]', 'controlsSliceIndex')
   /**
    * gets controls for the action bar
    * @param {Ember.Component[]|object} controls - array or hash of controls
    * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering controls
-   * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of extra controls
-   *  or flag indicating whether to generate them automatically
+   * @param {number} controlsSliceIndex - index to slice the controls at for auto moreActions
    * @returns {Ember.Component[]} array of controls
    */
-  _controls (controls, selectedItems, moreActions) {
+  _controls (controls, selectedItems, controlsSliceIndex) {
     controls = this.getNormalizedControls(controls, selectedItems)
-
-    // slice off extra controls if needed (default)
-    if (moreActions === true) {
-      // get count of components that have onClick defined
-      let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
-
-      // remove controls from the beginning of array when we have more than 4
-      // only remove controls with onClick defined
-      // also ignore invisible controls
-      controls = controls.reverse()
-        .filter(control => !this.hasOnClick(control) ||
-           !this.controlIsVisible(control) ||
-           ++clickableCount <= MAX_CONTROLS)
-      controls.reverse()
-    }
-
-    return controls
+    return controls.slice(controlsSliceIndex)
   },
 
   @readOnly
-  @computed('controls', 'selectedItems.[]', 'moreActions')
+  @computed('controls', 'selectedItems.[]', 'moreActions', 'controlsSliceIndex')
   /**
    * gets controls for the action bar
-   * @param {Ember.Component[]|object} controls - array or hash of moreActions
+   * @param {Ember.Component[]|object} controls - array or hash of controls
    * @param {Ember.Object[]|object[]} selectedItems - array of selected items for filtering moreActions
-   * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of extra moreActions
+   * @param {Ember.Component[]|boolean|object[]|object} moreActions - array or hash of moreActions
+   * @param {number} controlsSliceIndex - index to slice the controls at for auto moreActions
    *  or flag indicating whether to generate them automatically
    * @returns {object[]} array of moreActions definitions
    */
-  _moreActions (controls, selectedItems, moreActions) {
+  _moreActions (controls, selectedItems, moreActions, controlsSliceIndex) {
     controls = this.getNormalizedControls(controls, selectedItems)
     moreActions = this.getNormalizedControls(moreActions, selectedItems)
 
     // fail fast if we're told not use this feature
     if (moreActions === false) {
       return []
-    }
 
     // get the extra controls if needed (default)
-    if (moreActions === true) {
-      // get count of components that have onClick defined
-      let clickableCount = controls.filter(control => !this.hasOnClick(control)).length
+    } else if (moreActions === true) {
+      return controls.slice(0, controlsSliceIndex)
 
-      // grab controls from beginning for moreACtions button if we have more than 4
-      // only grab controls which have onClick defined
-      // ignore invisible controls
-      moreActions = controls.reverse()
-        .filter(control => this.controlIsVisible(control) &&
-          this.hasOnClick(control) &&
-          ++clickableCount > MAX_CONTROLS)
-      moreActions.reverse()
+    // passed in, return those
+    } else {
+      return moreActions
     }
-
-    // convert controls to POJOs if needed
-    return moreActions.map(control => this.convertControl(control))
   },
 
   // == Functions =============================================================
-
-  controlIsVisible (control) {
-    return this.convertControl(control).isVisible !== false
-  },
-
-  /**
-   * converts a control to a hash of arguments to be used for building the moreActions button
-   * @param {Ember.Component|object} control - a control to convert
-   * @returns {object} - plain object of props for moreActions button
-   */
-  convertControl (control) {
-    const propNames = ['disabled', 'isVisible', 'hook', 'onClick', 'text']
-    let hashKey = Object.keys(control).filter(key => /component_hash/i.test(key))
-    let result
-
-    // ember 2.8
-    // TODO remove when we stop supporting Ember 2.8
-    // Ember 2.8 handled the internals of the passed component definition differently
-    if (hashKey.length) {
-      hashKey = hashKey[0]
-
-      const hash = control[hashKey]
-
-      result = propNames.reduce((props, key) => {
-        let val = hash[key]
-
-        // compute if necessary
-        if (typeof val === 'object' && val._compute && typeof val._compute === 'function') {
-          val = val._compute()
-        }
-
-        // set val
-        props[key] = val
-
-        // return the props
-        return props
-      }, {})
-
-    // ember 2.12+
-    } else if (get(control, 'args.named.keys')) {
-      result = control.args.named.keys.reduce((props, key) => {
-        // only get specified prop names
-        if (propNames.includes(key)) {
-          // compute the property if exists and is needed
-          let val = get(control, `args.named._map.${key}`)
-
-          if (val.compute || val._lastValue) {
-            let lastVal = val._lastValue
-
-            // use lastVal
-            if (lastVal !== undefined && lastVal !== null) {
-              props[key] = lastVal
-            } else {
-              // need val.compute vs just compute for context
-              props[key] = val.compute()
-            }
-
-          // else grab value from component
-          } else {
-            props[key] = get(control, `args.named._map.${key}.inner`)
-          }
-        }
-
-        return props
-      }, {})
-
-    // POJO
-    } else {
-      result = control
-    }
-
-    // set classNames
-    result.classNames = [
-      result.disabled ? 'disabled' : '',
-      !result.isVisible ? 'invisible' : ''
-    ].filter(prop => !!prop).join(' ')
-
-    return result
-  },
 
   /**
    * converts controls to array if they are given as a hash
@@ -256,25 +152,53 @@ export default Component.extend({
       controls = applicableControls(this.selectedTypesWithControls(selectedItems)).map((controlName) => {
         return controls[controlName]
       })
+    }
 
-    // return copy if array
-    } else if (Array.isArray(controls)) {
-      return controls.slice(0)
+    // check for POJOs and return copy
+    if (Array.isArray(controls)) {
+      return controls.map(control => {
+        if (control.isPOJO === undefined && !control.set) {
+          control.isPOJO = !!(control.hook && control.text && control.onClick)
+        }
+        return control
+      })
     }
 
     return controls
   },
 
   /**
-   * checks whether a component definition has an onClick handler
-   * @param {Ember.Component|object} control - control to check whether has onClick
-   * @returns {boolean} whether the control does indeed have an onClick
+   * generates controlsMap for organizing the buttons
+   * sets controlsMap and controlsSliceIndex based on visible components and their arrangement
    */
-  hasOnClick (control) {
-    if (control.onClick || this.convertControl(control).onClick) {
-      return true
+  generateControlsMap () {
+    // get an array mapping element text and visible state
+    const controlsMap = this.$('.frost-action-bar-buttons > *, li > *')
+      .toArray() // get as array
+      .filter(el => !/frost-more-button/.test(el.className)) // remove more... button from list
+      .map(el => this.$(el).is(':visible') ? `${el.innerText.trim()}:visible` : el.innerText.trim())
+
+    // find slicepoint for controls
+    let controlCount = 0
+    let controlsSliceIndex = 0
+    for (let i = controlsMap.length - 1; i >= 0; i--) {
+      if (/:visible$/.test(controlsMap[i])) {
+        controlCount++
+      }
+
+      if (controlCount === MAX_CONTROLS) {
+        controlsSliceIndex = i
+        break
+      }
     }
-    return false
+
+    // if our map has changed set it and the new slice index
+    if (controlsMap.join() !== this.get('controlsMap').join()) {
+      this.setProperties({
+        controlsMap,
+        controlsSliceIndex
+      })
+    }
   },
 
   /**
@@ -298,11 +222,18 @@ export default Component.extend({
         return typesWithControls
       }, {})
     }
-  }
+  },
 
   // == DOM Events ============================================================
 
   // == Lifecycle Hooks =======================================================
+
+  didRender () {
+    // fail fast if nothing to do
+    if (this.get('moreActions') === true) {
+      this.generateControlsMap()
+    }
+  }
 
   // == Actions ===============================================================
 
