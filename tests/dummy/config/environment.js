@@ -1,7 +1,7 @@
 /* eslint-env node */
 
 module.exports = function (environment) {
-  var ENV = {
+  let ENV = {
     contentSecurityPolicy: {
       'img-src': "'self' data: w3.org"
     },
