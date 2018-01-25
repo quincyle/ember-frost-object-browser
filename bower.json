@@ -3,7 +3,6 @@
   "dependencies": {
     "Faker": "^3.0.1",
     "jquery-mockjax": "2.2.1",
-    "pretender": "^0.10.1",
     "perfect-scrollbar": ">=0.6.7 <2.0.0",
     "clockpicker-seconds": "~0.1.6"
   }
