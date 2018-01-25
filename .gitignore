@@ -15,6 +15,7 @@
 /libpeerconnection.log
 /typings/*
 npm-debug.log*
+package-lock.json
 testem.log
 .idea
 ge.json
