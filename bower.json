@@ -1,8 +1,6 @@
 {
   "name": "ember-frost-object-browser",
-  "dependencies": {
-    "perfect-scrollbar": ">=0.6.7 <2.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "Faker": "^3.0.1",
     "jquery-mockjax": "2.2.1"
