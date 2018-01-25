@@ -2,7 +2,6 @@
   "name": "ember-frost-object-browser",
   "dependencies": {
     "Faker": "^3.0.1",
-    "jquery": "2.1.4",
     "jquery-mockjax": "2.2.1",
     "mocha": "^2.2.4",
     "pretender": "^0.10.1",
