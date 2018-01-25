@@ -54,7 +54,6 @@
     "ember-frost-bunsen": "^17.0.0",
     "ember-frost-list": "^7.0.0",
     "ember-frost-sort": "^10.0.0",
-    "ember-frost-tabs": "^6.0.2",
     "ember-frost-test": "^4.0.0",
     "ember-load-initializers": "^0.6.0",
     "ember-math-helpers": "2.0.4",
