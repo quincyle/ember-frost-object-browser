@@ -52,7 +52,6 @@
     "ember-data-factory-guy": "2.10.0",
     "ember-export-application-global": "^1.0.5",
     "ember-frost-bunsen": "^17.0.0",
-    "ember-frost-fields": "^6.0.1",
     "ember-frost-info-bar": "^10.0.0",
     "ember-frost-list": "^7.0.0",
     "ember-frost-popover": "^6.1.1",
