@@ -236,11 +236,19 @@ onSortingChange (sortOrder) {…}
 }}
 ```
 
-A scenario where the loading state in the action bar might be useful is if there is some amount of processing that needs to be done in order to determine the state of the controls within the action bar. For example, determining whether a button should be enabled/disabled or shown/hidden. Note that the loading animation is the ring type from [ember-frost-core](https://github.com/ciena-frost/ember-frost-core).
+A scenario where the loading state in the action bar might be useful is if there is some amount of processing that
+needs to be done in order to determine the state of the controls within the action bar. For example, determining
+whether a button should be enabled/disabled or shown/hidden. Note that the loading animation is the ring type from
+[ember-frost-core](https://github.com/ciena-frost/ember-frost-core).
 
 #### More... Button
 
-By default, if the action bar has more than 4 visible components, only the last 4 will be shown. The rest will be collapsed into a "More..." button with a popover list of the remaining actions. Buttons, links, and any other controls are restyled as clickable items in an unordered list to maintain their initial behavior. This can be overridden by setting `moreActions=false` or by manually setting the action buttons you want wrapped up. The `moreActions` property accepts either components or `POJO`s that define `hook`, `text`, `onClick`, and optionally `disabled` and `isVisible`, which will be converted to frost-buttons.
+By default, if the action bar has more than 4 visible components, only the last 4 will be shown. The rest will be
+collapsed into a "More..." button with a popover list of the remaining actions. Buttons, links, and any other
+controls are restyled as clickable items in an unordered list to maintain their initial behavior. This can be
+overridden by setting `moreActions=false` or by manually setting the action buttons you want wrapped up. The
+`moreActions` property accepts either components or `POJO`s that define `hook`, `text`, `onClick`, and optionally
+`disabled` and `isVisible`, which will be converted to frost-buttons.
 
 ##### POJO example
 
