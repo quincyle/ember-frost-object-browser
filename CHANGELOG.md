@@ -1,3 +1,57 @@
+# 21.0.0 (2018-01-30)
+* **Added** ignore the linting of the `CHANGELOG.md`
+* **Added** ignoring of `package-lock` until we are ready to move to node 8
+* **Added** ignoring of `.DS_Store`
+* **Removed** `.DS_Store` that was accidentally committed
+* **Removed** useLintTree ember-cli-mocha configuration from `ember-cli-build.js`
+* **Removed** `.remarkrc` file since it is now provided by `ember-test-utils`
+* **Removed** the blueprint file since packages are now included via dependencies
+* **Removed** leftover blanket code coverage files
+* **Updated** `ember-frost-test` to `^4.0.0`
+* **Updated** `ember-cli-chai` to `0.4.3`
+* **Updated** `ember-cli-mocha` to `0.14.4`
+* **Updated** `ember-sinon` to `^0.7.0`
+* **Updated** `ember-test-utils` to `^8.1.0`
+* **Updated** `sinon-chai` to `^2.14.0`
+* **Added** `ember-browserify` @ `^1.2.0`
+* **Updated** `ember-cli-code-coverage` to `0.3.12`
+* **Added** `ember-cli-frost-blueprints` @ `^5.0.1`
+* **Updated** `ember-cli-notifications` to `^4.2.1`
+* **Removed** unused `ember-ajax` package
+* **Removed** unused `ember-async-image` package
+* **Removed** unused `ember-cli-autoprefixer` package
+* **Removed** deprecated `ember-cli-import-polyfill` package
+* **Removed** unused `ember-cli-moment-shim` package
+* **Removed** unused `ember-cli-sri` package
+* **Updated** `ember-computed-decorators` to `0.3.0` and moved to a dependency instead of a devDependency
+* **Removed** unused `ember-concurrency` package
+* **Removed** unused `ember-elsewhere` package
+* **Updated** `ember-frost-bunsen` to `^17.0.0`
+* **Removed** unused `ember-frost-fields` package
+* **Removed** unused `ember-frost-info-bar` package
+* **Updated** `ember-frost-list` to `^9.0.0`
+* **Updated** `ember-frost-popover` to `^8.0.0` and moved to a dependency instead of a devDependency
+* **Updated** `ember-frost-sort` to `^10.0.0`
+* **Removed** unused `ember-frost-tabs` package
+* **Updated** `ember-hook` to `1.4.2` and moved to a dependency instead of a devDependency
+* **Removed** unused `ember-math-helpers` package
+* **Removed** unused `ember-one-way-controls` package
+* **Updated** `ember-prop-types` to `^6.0.1` and moved to a dependency instead of a devDependency
+* **Removed** unused `ember-run-raf` package
+* **Removed** unused `ember-sortable` package
+* **Removed** unused `ember-spread` package
+* **Removed** unused `smoke-and-mirrors` package
+* **Updated** `ember-cli-sass` to `7.1.1`
+* **Updated** `ember-frost-core` to `^5.1.1`
+* **Removed** unused `e2e/` testing directory
+* **Removed** unused `animation-frame` bower package
+* **Removed** unused `jquery` bower package
+* **Removed** unneeded `mocha` bower package
+* **Removed** unused `perfect-scrollbar` bower package
+* **Removed** unused `clockpicker-seconds` bower package
+* **Updated** `Faker` and `jquery-mockjax` bower packages to be devDependencies
+
+
 # 20.0.2 (2018-01-23)
 * improved css to handle hidden items in the moreActions popover
 
