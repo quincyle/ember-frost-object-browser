@@ -77,7 +77,7 @@
     "ember-computed-decorators": "0.3.0",
     "ember-frost-core": "^7.0.0",
     "ember-hook": "1.4.2",
-    "ember-frost-popover": "^8.0.0",
+    "ember-frost-popover": "^9.0.0",
     "ember-prop-types": "^7.0.2"
   },
   "ember-addon": {
