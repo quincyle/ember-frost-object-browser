@@ -84,7 +84,7 @@
     "configPath": "tests/dummy/config"
   },
   "pr-bumper": {
-    "coverage": 96.2
+    "coverage": 94.95
   },
   "ember-frost-icon-pack": {
     "name": "frost-object-browser"
