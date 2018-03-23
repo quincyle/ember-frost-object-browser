@@ -1,3 +1,23 @@
+# 22.0.0 (2018-03-23)
+* **Updated** pull request template
+* **Added** issue template
+* **Updated** to `pr-bumper` version `3`
+* **Updated** to node 8
+* **Added** slack integration
+* **Updated** `ember-frost-test` to `^4.0.1`
+* **Updated** `ember-test-utils` to `^8.1.1`
+* **Updated** `ember-cli-frost-blueprints` to `^5.0.2`
+* **Updated** `ember-frost-bunsen` to `^19.0.1`
+* **Updated** `ember-frost-list` to `^10.0.0`
+* **Updated** `ember-frost-sort` to `^12.0.0`
+* **Updated** `pr-bumper` to `^3.7.0`
+* **Updated** `ember-prop-types` to `^7.0.1`
+* **Updated** `ember-frost-core` to `^7.0.0`
+* **Updated** `ember-frost-popover` to `^9.0.0`
+* **Removed** ignoring of `package-lock.json` file
+* **Added** `package-lock.json` file
+* **Updated** Travis CI scripts to allow non-exact node version
+
 # 21.0.0 (2018-01-30)
 * **Added** ignore the linting of the `CHANGELOG.md`
 * **Added** ignoring of `package-lock` until we are ready to move to node 8
