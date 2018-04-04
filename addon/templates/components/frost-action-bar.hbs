@@ -13,13 +13,15 @@
 </div>
 <div class='{{css}}-buttons' data-test={{hook 'frost-action-bar-buttons'}}>
   {{#if _moreActions.length}}
-    {{#frost-button
+    <div 
       class='frost-more-button'
-      hook='moreActions'
-      priority='secondary'
-      size='medium'
-      text=moreActionsText
-    }}
+      data-test={{hook 'moreActions'}}>
+      {{frost-button
+        hook='frost-more-button-button'
+        priority='secondary'
+        size='medium'
+        text=moreActionsText
+      }}
       {{#frost-popover
         classNames='more-actions-popover'
         closest=true
@@ -45,7 +47,7 @@
           {{/each}}
         </ul>
       {{/frost-popover}}
-    {{/frost-button}}
+    </div>
   {{/if}}
   {{#each _controls as |control|}}
     {{component control}}
