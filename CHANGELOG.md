@@ -1,3 +1,13 @@
+# 23.0.0 (2018-04-17)
+
+* Upgraded `ember-frost-bunsen` to `^20.0.0`
+* Upgraded `ember-frost-list` to `^11.0.0`
+* Upgraded `ember-frost-sort` to `^13.0.0`
+* Upgraded `ember-frost-core` to `^8.0.0`
+* Upgraded `ember-frost-popover` to `^10.0.0`
+* Installed `ember-cli-svgstore`
+* Updated `frost-icon` functionality to work with new version of `ember-frost-core`
+
 # 22.0.1 (2018-04-05)
 * moved dropdown outside the button because interactive elements inside interactive elements is not html5 compliant
 
