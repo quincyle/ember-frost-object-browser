@@ -52,9 +52,9 @@
     "ember-data": "~2.12.0",
     "ember-data-factory-guy": "2.10.0",
     "ember-export-application-global": "^1.0.5",
-    "ember-frost-bunsen": "^19.0.1",
-    "ember-frost-list": "^10.0.0",
-    "ember-frost-sort": "^12.0.0",
+    "ember-frost-bunsen": "^20.0.0",
+    "ember-frost-list": "^11.0.0",
+    "ember-frost-sort": "^13.0.0",
     "ember-frost-test": "^4.0.1",
     "ember-load-initializers": "^0.6.0",
     "ember-resolver": "^2.0.3",
@@ -75,9 +75,9 @@
     "ember-cli-htmlbars": "^1.1.1",
     "ember-cli-sass": "7.1.1",
     "ember-computed-decorators": "0.3.0",
-    "ember-frost-core": "^7.0.0",
+    "ember-frost-core": "^8.0.0",
     "ember-hook": "1.4.2",
-    "ember-frost-popover": "^9.0.0",
+    "ember-frost-popover": "^10.0.0",
     "ember-prop-types": "^7.0.2"
   },
   "ember-addon": {
@@ -85,8 +85,5 @@
   },
   "pr-bumper": {
     "coverage": 94.95
-  },
-  "ember-frost-icon-pack": {
-    "name": "frost-object-browser"
   }
 }
