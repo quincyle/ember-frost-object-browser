@@ -1,3 +1,8 @@
+# 24.0.0 (2018-05-15)
+
+* Update `ember-frost-popover` _dependency_ to `^11.0.0`
+* Update `ember-frost-bunsen` _dev dependency_ to `^21.0.0`
+
 # 23.0.0 (2018-04-17)
 
 * Upgraded `ember-frost-bunsen` to `^20.0.0`
