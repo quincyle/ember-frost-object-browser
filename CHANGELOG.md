@@ -1,3 +1,7 @@
+# 24.0.1 (2018-05-29)
+
+* [#180](Fix broken demo app)
+
 # 24.0.0 (2018-05-15)
 
 * Update `ember-frost-popover` _dependency_ to `^11.0.0`
