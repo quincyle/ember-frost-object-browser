@@ -1,3 +1,7 @@
+# 24.0.2 (2018-05-29)
+* **Updated** `travis.yml` to set node version to `8.6.0`
+
+
 # 24.0.1 (2018-05-29)
 
 * [#180](Fix broken demo app)
