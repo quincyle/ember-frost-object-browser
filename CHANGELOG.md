@@ -1,3 +1,8 @@
+# 25.0.0 (2018-06-13)
+* **Updated** `ember-frost-bunsen` to version ^22.0.0`
+* **Added** `ember-cli-svgsore`
+
+
 # 24.0.2 (2018-05-29)
 * **Updated** `travis.yml` to set node version to `8.6.0`
 
